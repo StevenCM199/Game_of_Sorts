@@ -2,11 +2,14 @@ package com.mygdx.game;
 
 public class Enemigo{
 
-    private int Edad;
+    private String nombre;
 
-    private int HitPoints;
+    private int velocidadRecarga;
+
+    private int edad;
+
+    private int hitPoints;
 
     private String padre;
-
 
 }
