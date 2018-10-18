@@ -1,15 +1,23 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+
 public class Enemigo{
 
-    private String nombre;
+    protected Sprite sprite;
 
-    private int velocidadRecarga;
+    protected String nombre;
 
-    private int edad;
+    protected int velocidadRecarga;
 
-    private int hitPoints;
+    protected int edad;
 
-    private String padre;
+    protected int hitPoints;
 
+    protected String padre;
+
+    public Enemigo(Texture textura, float x, float y) {
+       // super(textura, x, y);
+    }
 }
