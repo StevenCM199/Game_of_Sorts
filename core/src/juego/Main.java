@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package juego;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -20,16 +20,12 @@ public class Main extends ApplicationAdapter {
 	public Jugador jugador;
 	private Texture texturaJugador;
 
-
 	private ArrayList<Bala> balas;
 	private Texture texturaBala;
 
-	private Esbirro esbirro;
 	private ArrayList<Esbirro> esbirros;
 	private Texture texturaEsbirro;
 
-	public static final float MIN_ENEMY_SPAWN_TIME = 0.03f;
-	public static final float MAX_ENEMY_SPAWN_TIME = 0.06f;
 	float esbirroSpawnTimer;
 	Random random;
 
@@ -57,8 +53,6 @@ public class Main extends ApplicationAdapter {
 		balas = new ArrayList<Bala>();
 		esbirros = new ArrayList<Esbirro>();
 		random = new Random();
-
-
 	}
 
 	//Loop del juego
@@ -70,34 +64,55 @@ public class Main extends ApplicationAdapter {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
 			balas.add(new Bala(texturaBala,jugador.getX(),jugador.getY()));
 		}
-		System.out.println(balas);
+			//System.out.println(balas);
 
-		//Movimiento de las bolas de fuego
-		ArrayList<Bala> BalasParaQuitar = new ArrayList<Bala>();
-		for (Bala bala : balas) {
-			bala.update();
-			if (bala.quitar)
-				BalasParaQuitar.add(bala);
-		}
-		balas.removeAll(BalasParaQuitar);
-
-		//Movimiento del jugador
-		jugador.mover();
-
+		//Spawn de los esbirros
 		esbirroSpawnTimer +=1*deltaTime;
-		//System.out.println(esbirroSpawnTimer);
+			//System.out.println(esbirroSpawnTimer);
 		if (esbirroSpawnTimer > 1){
 			esbirros.add(new Esbirro(texturaEsbirro,600, random.nextInt(420-70)+70));
 			esbirroSpawnTimer = 0;
 		}
-		//System.out.println(jugador.getY());
+
+		//Movimiento de las bolas de fuego
+		ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
+		for (Bala bala : balas) {
+			System.out.println(bala.recta);
+			bala.update();
+			if (bala.quitar)
+				balasParaQuitar.add(bala);
+		}
+
+
+		//Movimiento de los esbirros
+			//System.out.println(jugador.getY());
 		ArrayList<Esbirro> esbirrosParaQuitar = new ArrayList<Esbirro>();
 		for (Esbirro esbirro : esbirros){
 			esbirro.update();
 			if (esbirro.quitar)
 				esbirrosParaQuitar.add(esbirro);
 		}
+
+
+		//Movimiento del jugador
+		jugador.mover();
+
+		//Colisiones
+		for(Bala bala : balas){
+			for (Esbirro esbirro : esbirros){
+				if (bala.recta.overlaps(esbirro.recta)){
+					System.out.println("Choque");
+					balasParaQuitar.add(bala);
+					esbirrosParaQuitar.add(esbirro);
+				}
+			}
+		}
+		balas.removeAll(balasParaQuitar);
 		esbirros.removeAll(esbirrosParaQuitar);
+
+
+
+
 
 
 		//Color de fondo
