@@ -22,5 +22,8 @@ public class DesktopLauncher {
 		ResistenciaDeDragon resistencia = new ResistenciaDeDragon();
 		resistencia.resistenciaDeDragon();
 
+		ClaseDeDragon clase = new ClaseDeDragon();
+		clase.claseAle();
+
 	}
 }
