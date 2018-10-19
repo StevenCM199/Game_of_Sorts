@@ -1,6 +1,6 @@
 package juego;
 
-public class NomAleatoriosDragones {
+public class NomAleatoriosDragones<nomAleatorio> {
 
     public static String[] generarNombreAleatorio(int cantidad) {
         String[] nomAleatorioDragones = new String[cantidad];
@@ -22,14 +22,9 @@ public class NomAleatoriosDragones {
         return nomAleatorioDragones;
     }
 
-    /*
-    public static void mostrar(String[] nombresGenerados) {
-        for (int i = 0; i < nombresGenerados.length; i++) {
-            System.out.println(nombresGenerados);
-        }
-    }
 
-    public static void main(String[] args) {
-        mostrar(generarNombreAleatorio(10));
-    }*/
+    public static void nomAleatorio() {
+        String [] nom = generarNombreAleatorio(1);
+        System.out.println(nom[0]);
+    }
 }
