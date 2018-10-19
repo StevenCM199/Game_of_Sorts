@@ -25,6 +25,6 @@ public class NomAleatoriosDragones<nomAleatorio> {
 
     public static void nomAleatorio() {
         String [] nom = generarNombreAleatorio(1);
-        System.out.println(nom[0]);
+        System.out.println("Nombre de Dragon: "+nom[0]);
     }
 }

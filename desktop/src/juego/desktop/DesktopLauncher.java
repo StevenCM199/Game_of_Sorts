@@ -1,11 +1,8 @@
 package juego.desktop;
 
-import juego.EdadDeDragon;
-import juego.Main;
+import juego.*;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import juego.NomAleatoriosDragones;
-import juego.VelocidadDeRecarga;
 
 public class DesktopLauncher {
 
@@ -21,6 +18,9 @@ public class DesktopLauncher {
 
 		EdadDeDragon edad = new EdadDeDragon();
 		edad.edadDeDragon();
+
+		ResistenciaDeDragon resistencia = new ResistenciaDeDragon();
+		resistencia.resistenciaDeDragon();
 
 	}
 }
