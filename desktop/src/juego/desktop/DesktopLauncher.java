@@ -1,5 +1,6 @@
 package juego.desktop;
 
+import juego.EdadDeDragon;
 import juego.Main;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
@@ -17,6 +18,9 @@ public class DesktopLauncher {
 
 		VelocidadDeRecarga velocidad = new VelocidadDeRecarga();
 		velocidad.velocidadDeRecarga();
+
+		EdadDeDragon edad = new EdadDeDragon();
+		edad.edadDeDragon();
 
 	}
 }
