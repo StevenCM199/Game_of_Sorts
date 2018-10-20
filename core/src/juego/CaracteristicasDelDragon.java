@@ -5,36 +5,28 @@ import java.util.Random;
 public class CaracteristicasDelDragon {
 
     Random numero = new Random();
-    int velocidad = (numero.nextInt(1000)+1);
-    int edad = (numero.nextInt(100)+1);
-    int resistencia = (numero.nextInt(3)+1);
+    int velocidadD = (numero.nextInt(1000)+1); //Velocidad del Dragon
+    int edadD = (numero.nextInt(100)+1); //Edad del Dragon
+    int resistenciaD = (numero.nextInt(3)+1); //Resistencia del Dragon
+
+    ListasEnlazadas Dragon = new ListasEnlazadas();
 
     public CaracteristicasDelDragon() {
 
-        String[] caracteristicas = new String[6];
-
+        //Nombre del Dragon
         NomAleatoriosDragones nombre = new NomAleatoriosDragones();
         String[] nom = nombre.generarNombreAleatorio(1);
         String nombreD = new String(nom[0]);
 
+        //Clase del Dragon
         ClaseDeDragon clase = new ClaseDeDragon();
         String[] cla = clase.claseDeDragon(1);
         String claseD = new String(cla[0]);
 
-        String velocidadD = Integer.toString(velocidad);
-        String edadD = Integer.toString(edad);
-        String resistenciaD = Integer.toString(resistencia);
-
-        caracteristicas[0] = claseD;
-        caracteristicas[1] = nombreD;
-        caracteristicas[2] = resistenciaD;
-        caracteristicas[3] = velocidadD;
-        caracteristicas[4] = edadD;
-
-        System.out.println( "Clase: "+caracteristicas [0]);
-        System.out.println( "Nombre: "+caracteristicas [1]);
-        System.out.println( "Resistencia: "+caracteristicas [2]);
-        System.out.println( "Velocidad: "+caracteristicas [3]);
-        System.out.println( "Edad: "+caracteristicas [4]);
+        Dragon.addPrimera( resistenciaD );
+        Dragon.addPrimera( edadD );
+        Dragon.addPrimera( velocidadD );
+        Dragon.addPrimera( claseD );
+        Dragon.addPrimera( nombreD );
     }
 }
