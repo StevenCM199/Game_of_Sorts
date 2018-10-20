@@ -10,20 +10,6 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new Main(), config);
 
-		NomAleatoriosDragones nombre = new NomAleatoriosDragones();
-		nombre.nomAleatorio();
-
-		VelocidadDeRecarga velocidad = new VelocidadDeRecarga();
-		velocidad.velocidadDeRecarga();
-
-		EdadDeDragon edad = new EdadDeDragon();
-		edad.edadDeDragon();
-
-		ResistenciaDeDragon resistencia = new ResistenciaDeDragon();
-		resistencia.resistenciaDeDragon();
-
-		ClaseDeDragon clase = new ClaseDeDragon();
-		clase.claseAle();
-
+		CaracteristicasDelDragon Dragon1 = new CaracteristicasDelDragon();
 	}
 }
