@@ -3,8 +3,6 @@ package juego;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-import tools.Colisiones;
-
 
 
 //Clase de los dragones normales
@@ -17,17 +15,19 @@ public class Esbirro extends Objeto{
     int hitPoints = 1;
     String padre = "PadreDragon";
     public static final int velocidad = 2;
-    Colisiones rect;
+
 
     float x = sprite.getX();
     float y = sprite.getY();
-    Rectangle recta = sprite.getBoundingRectangle();
+    float ancho = sprite.getWidth();
+    float alto = sprite.getHeight();
 
+    public Rectangle recta = new Rectangle(x,y,ancho,alto);
 
 
     public Esbirro(Texture textura, float x, float y) {
         super(textura, x, y);
-        this.rect = new Colisiones(x,y,30,30);
+
 
     }
 
@@ -56,19 +56,18 @@ public class Esbirro extends Objeto{
 
     public void update(){
         sprite.translateX(-velocidad);
-        rect.mover(x,y);
+
         recta.x -= velocidad;
         if (sprite.getX() < 100)
             quitar = true;
     }
 
     public void dibujar(SpriteBatch batch) {
+        recta.setSize(sprite.getWidth(),sprite.getHeight());
         sprite.setSize(30,30);
         sprite.draw(batch);
-        recta.setSize(30,30);
+
     }
 
-    public Colisiones getColisiones(){
-        return rect;
-    }
+
 }

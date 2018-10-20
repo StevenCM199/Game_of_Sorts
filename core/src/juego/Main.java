@@ -6,6 +6,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -29,7 +30,7 @@ public class Main extends ApplicationAdapter {
 	float esbirroSpawnTimer;
 	Random random;
 
-
+	ShapeRenderer shape;
 
 
 	//Cargar texturas de los objetos
@@ -43,6 +44,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
+		shape = new ShapeRenderer();
 		cargarTexturas();
 		cargarObjetos();
 	}
@@ -77,7 +79,7 @@ public class Main extends ApplicationAdapter {
 		//Movimiento de las bolas de fuego
 		ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
 		for (Bala bala : balas) {
-			System.out.println(bala.recta);
+			//System.out.println(bala.recta);
 			bala.update();
 			if (bala.quitar)
 				balasParaQuitar.add(bala);
@@ -101,7 +103,7 @@ public class Main extends ApplicationAdapter {
 		for(Bala bala : balas){
 			for (Esbirro esbirro : esbirros){
 				if (bala.recta.overlaps(esbirro.recta)){
-					System.out.println("Choque");
+					//System.out.println("Choque");
 					balasParaQuitar.add(bala);
 					esbirrosParaQuitar.add(esbirro);
 				}
@@ -110,18 +112,15 @@ public class Main extends ApplicationAdapter {
 		balas.removeAll(balasParaQuitar);
 		esbirros.removeAll(esbirrosParaQuitar);
 
-
-
-
-
-
 		//Color de fondo
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
 		//Visualizacion de sprites en la pantalla de juego
+		batch.enableBlending();
 		batch.begin();
+
 
 		for (Bala bala : balas)
 			bala.dibujar(batch);
@@ -132,8 +131,8 @@ public class Main extends ApplicationAdapter {
 		jugador.dibujar(batch);
 
 		batch.end();
+
 	}
-	
 	@Override
 	public void dispose () {
 		batch.dispose();

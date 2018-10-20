@@ -5,6 +5,8 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
+
+
 public class Jugador extends Objeto {
 
     private int x;
@@ -65,5 +67,12 @@ public class Jugador extends Objeto {
 
     float getY() {
         return sprite.getY();
+    }
+
+    float getWidth(){
+        return sprite.getWidth();
+    }
+    float getHeight(){
+        return sprite.getHeight();
     }
 }
