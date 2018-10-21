@@ -10,6 +10,20 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new Main(), config);
 
-		CaracteristicasDelDragon Dragon1 = new CaracteristicasDelDragon();
-	}
+		config.height = 900;
+		config.width = 1200;
+
+		ListasEnlazadas listaDragones = new ListasEnlazadas();
+
+        for (int cant=0;cant<6;cant++) {
+
+            for (int pos = 0; pos < 5; pos++) {
+                CaracteristicasDelDragon Dragon = new CaracteristicasDelDragon();
+                listaDragones.addPrimera( Dragon );
+                System.out.print( listaDragones.obtenerDatoDragon( (Dragon), pos ) + " " );
+            }
+            System.out.println("");
+        }
+    }
+
 }
