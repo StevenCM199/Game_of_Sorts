@@ -10,6 +10,9 @@ public class DesktopLauncher {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new Main(), config);
 
+		config.height = 900;
+		config.width = 1200;
+
 		NomAleatoriosDragones nombre = new NomAleatoriosDragones();
 		nombre.nomAleatorio();
 

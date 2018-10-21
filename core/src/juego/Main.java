@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import tools.Fondo;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -27,17 +28,27 @@ public class Main extends ApplicationAdapter {
 	private ArrayList<Esbirro> esbirros;
 	private Texture texturaEsbirro;
 
+	Fondo sky, rocks1, rocks2, clouds1, clouds2, clouds3, clouds4;
+	Fondo rocks1DUP, rocks2DUP, clouds1DUP,clouds2DUP,clouds3DUP,clouds4DUP;
+	Texture texturaSky, texturaRocks1, texturaRocks2, texturaClouds1, texturaClouds2, texturaClouds3, texturaClouds4;
+
 	float esbirroSpawnTimer;
 	Random random;
 
 	ShapeRenderer shape;
-
 
 	//Cargar texturas de los objetos
 	private void cargarTexturas(){
 		texturaJugador = new Texture("jugador.png");
 		texturaBala = new Texture("bala.png");
 		texturaEsbirro = new Texture("enemy.png");
+		texturaSky = new Texture("sky.png");
+		texturaRocks1 = new Texture("rocks_1.png");
+		texturaRocks2 = new Texture("rocks_2.png");
+		texturaClouds1	 = new Texture("clouds_1.png");
+		texturaClouds2 = new Texture("clouds_2.png");
+		texturaClouds3 = new Texture("clouds_3.png");
+		texturaClouds4 = new Texture("clouds_4.png");
 	}
 
 	//Inicializar objetos
@@ -47,6 +58,7 @@ public class Main extends ApplicationAdapter {
 		shape = new ShapeRenderer();
 		cargarTexturas();
 		cargarObjetos();
+
 	}
 
 	//Precargar objetos
@@ -55,6 +67,26 @@ public class Main extends ApplicationAdapter {
 		balas = new ArrayList<Bala>();
 		esbirros = new ArrayList<Esbirro>();
 		random = new Random();
+		sky = new Fondo(texturaSky,0,0);
+
+		rocks1 = new Fondo(texturaRocks1,0,0);
+		rocks1DUP = new Fondo(texturaRocks1,1920,0);
+
+		rocks2 = new Fondo(texturaRocks2,0,0);
+		rocks2DUP = new Fondo(texturaRocks2,1920,0);
+
+		clouds1 = new Fondo(texturaClouds1,0,0);
+		clouds1DUP = new Fondo(texturaClouds1,1920,0);
+
+		clouds2 = new Fondo(texturaClouds2,0,0);
+		clouds2DUP = new Fondo(texturaClouds2,1920,0);
+
+		clouds3 = new Fondo(texturaClouds3,0,0);
+		clouds3DUP = new Fondo(texturaClouds3,1920,0);
+
+		clouds4 = new Fondo(texturaClouds4,0,0);
+		clouds4DUP = new Fondo(texturaClouds4,1920,0);
+
 	}
 
 	//Loop del juego
@@ -66,28 +98,33 @@ public class Main extends ApplicationAdapter {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
 			balas.add(new Bala(texturaBala,jugador.getX(),jugador.getY()));
 		}
-			//System.out.println(balas);
 
 		//Spawn de los esbirros
 		esbirroSpawnTimer +=1*deltaTime;
-			//System.out.println(esbirroSpawnTimer);
-		if (esbirroSpawnTimer > 1){
-			esbirros.add(new Esbirro(texturaEsbirro,600, random.nextInt(420-70)+70));
+		if (esbirroSpawnTimer > 5){
+			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
+			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
 			esbirroSpawnTimer = 0;
 		}
 
 		//Movimiento de las bolas de fuego
 		ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
+
 		for (Bala bala : balas) {
-			//System.out.println(bala.recta);
 			bala.update();
 			if (bala.quitar)
 				balasParaQuitar.add(bala);
 		}
 
-
 		//Movimiento de los esbirros
-			//System.out.println(jugador.getY());
 		ArrayList<Esbirro> esbirrosParaQuitar = new ArrayList<Esbirro>();
 		for (Esbirro esbirro : esbirros){
 			esbirro.update();
@@ -95,15 +132,31 @@ public class Main extends ApplicationAdapter {
 				esbirrosParaQuitar.add(esbirro);
 		}
 
-
 		//Movimiento del jugador
 		jugador.mover();
+
+		rocks1.mover(-0.5f);
+		rocks1DUP.mover(-0.5f);
+
+		rocks2.mover(-1);
+		rocks2DUP.mover(-1);
+
+		clouds1.mover(-2.8f);
+		clouds1DUP.mover(-2.8f);
+
+		clouds2.mover(-1.9f);
+		clouds2DUP.mover(-1.9f);
+
+		clouds3.mover(-1.2f);
+		clouds3DUP.mover(-1.2f);
+
+		clouds4.mover(-1.3f);
+		clouds4DUP.mover(-1.3f);
 
 		//Colisiones
 		for(Bala bala : balas){
 			for (Esbirro esbirro : esbirros){
 				if (bala.recta.overlaps(esbirro.recta)){
-					//System.out.println("Choque");
 					balasParaQuitar.add(bala);
 					esbirrosParaQuitar.add(esbirro);
 				}
@@ -118,8 +171,28 @@ public class Main extends ApplicationAdapter {
 
 
 		//Visualizacion de sprites en la pantalla de juego
+
 		batch.enableBlending();
 		batch.begin();
+
+		sky.dibujar(batch);
+		rocks1.dibujar(batch);
+		rocks1DUP.dibujar(batch);
+
+		rocks2.dibujar(batch);
+		rocks2DUP.dibujar(batch);
+
+		clouds1.dibujar(batch);
+		clouds1DUP.dibujar(batch);
+
+		clouds2.dibujar(batch);
+		clouds2DUP.dibujar(batch);
+
+		clouds3.dibujar(batch);
+		clouds3DUP.dibujar(batch);
+
+		clouds4.dibujar(batch);
+		clouds4DUP.dibujar(batch);
 
 
 		for (Bala bala : balas)
