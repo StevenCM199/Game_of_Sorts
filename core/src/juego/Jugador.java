@@ -12,6 +12,8 @@ public class Jugador extends Objeto {
     private int x;
     private int y;
 
+    private int velocidad = 4;
+
     public Jugador(Texture textura, int x, int y) {
         super(textura, x, y);
     }
@@ -21,35 +23,35 @@ public class Jugador extends Objeto {
     //Se llama desde el metodo render
     public void dibujar(SpriteBatch batch) {
         sprite.draw(batch);
-        sprite.setSize(50,50);
+        sprite.setSize(70,70);
 
     }
 
     public void mover(){
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-            sprite.translateX(-1);
+            sprite.translateX(-velocidad);
 
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-            sprite.translateX(1);
+            sprite.translateX(velocidad);
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP))
-            sprite.translateY(1);
+            sprite.translateY(velocidad);
 
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
-            sprite.translateY(-1);
+            sprite.translateY(-velocidad);
 
         if (sprite.getX() < 0)
             sprite.setX(1);
 
-        if (sprite.getX() > 600)
-            sprite.setX(599);
+        if (sprite.getX() > 1200)
+            sprite.setX(1199);
 
         if (sprite.getY() < 0)
             sprite.setY(1);
 
-        if (sprite.getY() > 425)
-            sprite.setY(424);
+        if (sprite.getY() > 870)
+            sprite.setY(869);
 
     }
 

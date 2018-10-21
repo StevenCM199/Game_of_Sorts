@@ -64,7 +64,7 @@ public class Esbirro extends Objeto{
 
     public void dibujar(SpriteBatch batch) {
         recta.setSize(sprite.getWidth(),sprite.getHeight());
-        sprite.setSize(30,30);
+        sprite.setSize(50,50);
         sprite.draw(batch);
 
     }
