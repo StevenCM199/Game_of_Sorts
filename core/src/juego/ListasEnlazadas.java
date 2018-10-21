@@ -32,6 +32,16 @@ public class ListasEnlazadas {
         return temporal.obtenerValor();
     }
 
+    public Object obtenerDatoDragon(CaracteristicasDelDragon Dragon, int index){
+        if (index==0){return Dragon.getNombreD();}
+        if (index==1){return Dragon.getClaseD(); }
+        if (index==2){return Dragon.getVelocidadD();}
+        if (index==3){return Dragon.getEdadD();}
+        if (index==4){return Dragon.getResistenciaD();}
+
+        return null;
+    }
+
     public int size(){return size;}
 
     public boolean estaVacia(){ return ((cabeza==null)?true:false); }

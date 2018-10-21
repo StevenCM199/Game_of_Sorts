@@ -9,7 +9,17 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new Main(), config);
+		
+		ListasEnlazadas listaDragones = new ListasEnlazadas();
 
-		CaracteristicasDelDragon Dragon1 = new CaracteristicasDelDragon();
+        for (int cant=0;cant<6;cant++) {
+
+            for (int pos = 0; pos < 5; pos++) {
+                CaracteristicasDelDragon Dragon = new CaracteristicasDelDragon();
+                listaDragones.addPrimera( Dragon );
+                System.out.print( listaDragones.obtenerDatoDragon( (Dragon), pos ) + " " );
+            }
+            System.out.println("");
+        }
 	}
 }
