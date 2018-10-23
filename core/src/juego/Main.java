@@ -15,6 +15,9 @@ import java.util.Random;
 
 public class Main extends ApplicationAdapter {
 
+    //Para elegir con cual Ordenamiento se hace los dragones
+    int CantidadDeColisiones = 0;
+
 	private float deltaTime;
 
 	SpriteBatch batch;
@@ -89,8 +92,8 @@ public class Main extends ApplicationAdapter {
 
 	}
 
-	//Acomodo por edad de cada dragon
-    public static ArrayList<Esbirro> SelectionSort(ArrayList<Esbirro> esbirros){
+	//Acomodo por edad de cada dragon SELECTION SORT
+    private static ArrayList<Esbirro> SelectionSort(ArrayList<Esbirro> esbirros){
 
         for (int i = 0; i < esbirros.size() - 1; i++){
             int index = i;
@@ -100,6 +103,22 @@ public class Main extends ApplicationAdapter {
             Esbirro smallerNumber = esbirros.get( index );
             esbirros.set( index,esbirros.get( i ) );
             esbirros.set( i,smallerNumber );
+        }
+        return esbirros;
+    }
+
+    //Acomodo de Dragones por velocidad INSERTION SORT
+    private static ArrayList<Esbirro> InsertionSort(ArrayList<Esbirro> esbirros){
+        Esbirro temp;
+        for (int i = 1; i < esbirros.size(); i++) {
+            for(int j = i ; j > 0 ; j--){
+                if(esbirros.get( j-1 ).velocidadRecarga > esbirros.get( j ).velocidadRecarga){
+                    temp = esbirros.get( j );
+                    esbirros.set( j, esbirros.get( j-1 ));
+                    esbirros.set( j-1,temp );
+                }
+            }
+
         }
         return esbirros;
     }
@@ -175,9 +194,14 @@ public class Main extends ApplicationAdapter {
 				if (bala.recta.overlaps(esbirro.recta)){
 					balasParaQuitar.add(bala);
 					esbirrosParaQuitar.add(esbirro);
-                    System.out.println( esbirros );
+					System.out.println( esbirros );
+					//Aqui se seleciona depende de la vez que se haya chochado
                     SelectionSort( esbirros );
-                    System.out.println( esbirros );
+                    System.out.println( "Selection"+esbirros );
+                    InsertionSort( esbirros );
+                    System.out.println( "Insertion"+esbirros );
+                    /*if (CantidadDeColisiones==9){ CantidadDeColisiones++;InsertionSort( esbirros );
+                        System.out.println( "Insertion"+esbirros );}*/
 				}
 			}
 		}
