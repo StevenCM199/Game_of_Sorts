@@ -8,13 +8,15 @@ import com.badlogic.gdx.math.Rectangle;
 //Clase de los dragones normales
 public class Esbirro extends Objeto{
 
+    CaracteristicasDelDragon Dragon = new CaracteristicasDelDragon();
 
-    String nombre = "Enemigo";
-    int velocidadRecarga = 2;
-    int edad = 40;
-    int hitPoints = 1;
+    String nombre = Dragon.nombreD;
+    String clase = Dragon.claseD;
+    int velocidadRecarga = Dragon.velocidadD;
+    int edad = Dragon.edadD;
+    int hitPoints = Dragon.resistenciaD;
     String padre = "PadreDragon";
-    public static final int velocidad = 2;
+    public static final int velocidad = 0;
 
 
     float x = sprite.getX();
@@ -27,9 +29,9 @@ public class Esbirro extends Objeto{
 
     public Esbirro(Texture textura, float x, float y) {
         super(textura, x, y);
-
-
     }
+
+
 
     public String getNombre() {
         return nombre;
@@ -51,6 +53,10 @@ public class Esbirro extends Objeto{
         return padre;
     }
 
+    public String getClase() {
+        return clase;
+    }
+
     public boolean quitar = false;
 
 
@@ -62,12 +68,15 @@ public class Esbirro extends Objeto{
             quitar = true;
     }
 
+    public void updateXY(int x, int y){
+        sprite.translateX(x);
+        sprite.translateY( y );
+    }
+
     public void dibujar(SpriteBatch batch) {
         recta.setSize(sprite.getWidth(),sprite.getHeight());
         sprite.setSize(50,50);
         sprite.draw(batch);
 
     }
-
-
 }

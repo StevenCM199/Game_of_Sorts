@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import tools.Fondo;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -58,7 +59,6 @@ public class Main extends ApplicationAdapter {
 		shape = new ShapeRenderer();
 		cargarTexturas();
 		cargarObjetos();
-
 	}
 
 	//Precargar objetos
@@ -88,6 +88,21 @@ public class Main extends ApplicationAdapter {
 		clouds4DUP = new Fondo(texturaClouds4,1920,0);
 
 	}
+
+	//Acomodo por edad de cada dragon
+    public static ArrayList<Esbirro> SelectionSort(ArrayList<Esbirro> esbirros){
+
+        for (int i = 0; i < esbirros.size() - 1; i++){
+            int index = i;
+            for (int j = i + 1; j < esbirros.size(); j++)
+                if (esbirros.get( j ).edad < esbirros.get( index ).edad)
+                    index = j;
+            Esbirro smallerNumber = esbirros.get( index );
+            esbirros.set( index,esbirros.get( i ) );
+            esbirros.set( i,smallerNumber );
+        }
+        return esbirros;
+    }
 
 	//Loop del juego
 	@Override
@@ -130,6 +145,7 @@ public class Main extends ApplicationAdapter {
 			esbirro.update();
 			if (esbirro.quitar)
 				esbirrosParaQuitar.add(esbirro);
+
 		}
 
 		//Movimiento del jugador
@@ -159,6 +175,9 @@ public class Main extends ApplicationAdapter {
 				if (bala.recta.overlaps(esbirro.recta)){
 					balasParaQuitar.add(bala);
 					esbirrosParaQuitar.add(esbirro);
+                    System.out.println( esbirros );
+                    SelectionSort( esbirros );
+                    System.out.println( esbirros );
 				}
 			}
 		}

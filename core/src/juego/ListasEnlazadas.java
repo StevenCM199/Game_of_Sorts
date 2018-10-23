@@ -32,6 +32,13 @@ public class ListasEnlazadas {
         return temporal.obtenerValor();
     }
 
+    /*public Object Obt(ListasEnlazadas list, int index1,int index2){
+        ListasEnlazadas listaF = new ListasEnlazadas();
+        listaF.addPrimera(list.obtener( index1 ));
+        return listaF.obtener( index2 );
+
+    }*/
+
     public Object obtenerDatoDragon(CaracteristicasDelDragon Dragon, int index){
         if (index==0){return Dragon.getNombreD();}
         if (index==1){return Dragon.getClaseD(); }
@@ -45,6 +52,4 @@ public class ListasEnlazadas {
     public int size(){return size;}
 
     public boolean estaVacia(){ return ((cabeza==null)?true:false); }
-
-
 }
