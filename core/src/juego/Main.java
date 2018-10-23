@@ -41,6 +41,8 @@ public class Main extends ApplicationAdapter {
 
 	ShapeRenderer shape;
 
+	private boolean isPaused;
+
 	//Cargar texturas de los objetos
 	private void cargarTexturas(){
 		texturaJugador = new Texture("jugador.png");
@@ -128,93 +130,104 @@ public class Main extends ApplicationAdapter {
 	public void render () {
 		deltaTime = Gdx.graphics.getDeltaTime();
 
-		//Si se presiona espacio el dragon dispara una bola de fuego
-		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
-			balas.add(new Bala(texturaBala,jugador.getX(),jugador.getY()));
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+			isPaused = true;
 		}
 
-		//Spawn de los esbirros
-		esbirroSpawnTimer +=1*deltaTime;
-		if (esbirroSpawnTimer > 5){
-			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1150, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
-			esbirros.add(new Esbirro(texturaEsbirro,1200, random.nextInt(870-70)+70));
-			esbirroSpawnTimer = 0;
+		if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE) && isPaused == true)  {
+			isPaused = false;
 		}
 
-		//Movimiento de las bolas de fuego
-		ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
+		if (isPaused == false) {
 
-		for (Bala bala : balas) {
-			bala.update();
-			if (bala.quitar)
-				balasParaQuitar.add(bala);
-		}
 
-		//Movimiento de los esbirros
-		ArrayList<Esbirro> esbirrosParaQuitar = new ArrayList<Esbirro>();
-		for (Esbirro esbirro : esbirros){
-			esbirro.update();
-			if (esbirro.quitar)
-				esbirrosParaQuitar.add(esbirro);
+			//Si se presiona espacio el dragon dispara una bola de fuego
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+				balas.add(new Bala(texturaBala, jugador.getX(), jugador.getY()));
+			}
 
-		}
+			//Spawn de los esbirros
+			esbirroSpawnTimer += 1 * deltaTime;
+			if (esbirroSpawnTimer > 5) {
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
+				esbirroSpawnTimer = 0;
+			}
 
-		//Movimiento del jugador
-		jugador.mover();
+			//Movimiento de las bolas de fuego
+			ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
 
-		rocks1.mover(-0.5f);
-		rocks1DUP.mover(-0.5f);
-
-		rocks2.mover(-1);
-		rocks2DUP.mover(-1);
-
-		clouds1.mover(-2.8f);
-		clouds1DUP.mover(-2.8f);
-
-		clouds2.mover(-1.9f);
-		clouds2DUP.mover(-1.9f);
-
-		clouds3.mover(-1.2f);
-		clouds3DUP.mover(-1.2f);
-
-		clouds4.mover(-1.3f);
-		clouds4DUP.mover(-1.3f);
-
-		//Colisiones
-		for(Bala bala : balas){
-			for (Esbirro esbirro : esbirros){
-				if (bala.recta.overlaps(esbirro.recta)){
+			for (Bala bala : balas) {
+				bala.update();
+				if (bala.quitar)
 					balasParaQuitar.add(bala);
+			}
+
+			//Movimiento de los esbirros
+			ArrayList<Esbirro> esbirrosParaQuitar = new ArrayList<Esbirro>();
+			for (Esbirro esbirro : esbirros) {
+				esbirro.update();
+				if (esbirro.quitar)
 					esbirrosParaQuitar.add(esbirro);
-					System.out.println( esbirros );
-					//Aqui se seleciona depende de la vez que se haya chochado
-                    SelectionSort( esbirros );
-                    System.out.println( "Selection"+esbirros );
-                    InsertionSort( esbirros );
-                    System.out.println( "Insertion"+esbirros );
+
+			}
+
+			//Movimiento del jugador
+			jugador.mover();
+
+			rocks1.mover(-0.5f);
+			rocks1DUP.mover(-0.5f);
+
+			rocks2.mover(-1);
+			rocks2DUP.mover(-1);
+
+			clouds1.mover(-2.8f);
+			clouds1DUP.mover(-2.8f);
+
+			clouds2.mover(-1.9f);
+			clouds2DUP.mover(-1.9f);
+
+			clouds3.mover(-1.2f);
+			clouds3DUP.mover(-1.2f);
+
+			clouds4.mover(-1.3f);
+			clouds4DUP.mover(-1.3f);
+
+			//Colisiones
+			for (Bala bala : balas) {
+				for (Esbirro esbirro : esbirros) {
+					if (bala.recta.overlaps(esbirro.recta)) {
+						balasParaQuitar.add(bala);
+						esbirrosParaQuitar.add(esbirro);
+						System.out.println(esbirros);
+						//Aqui se seleciona depende de la vez que se haya chochado
+						SelectionSort(esbirros);
+						System.out.println("Selection" + esbirros);
+						InsertionSort(esbirros);
+						System.out.println("Insertion" + esbirros);
                     /*if (CantidadDeColisiones==9){ CantidadDeColisiones++;InsertionSort( esbirros );
                         System.out.println( "Insertion"+esbirros );}*/
+					}
 				}
 			}
+			balas.removeAll(balasParaQuitar);
+			esbirros.removeAll(esbirrosParaQuitar);
+
+			//Color de fondo
+			Gdx.gl.glClearColor(0, 0, 0, 1);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 		}
-		balas.removeAll(balasParaQuitar);
-		esbirros.removeAll(esbirrosParaQuitar);
-
-		//Color de fondo
-		Gdx.gl.glClearColor(0, 0, 0, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
 		//Visualizacion de sprites en la pantalla de juego
-
 		batch.enableBlending();
 		batch.begin();
 

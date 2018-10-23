@@ -20,6 +20,7 @@ public class Jugador extends Objeto {
 
 
 
+
     //Se llama desde el metodo render
     public void dibujar(SpriteBatch batch) {
         sprite.draw(batch);
