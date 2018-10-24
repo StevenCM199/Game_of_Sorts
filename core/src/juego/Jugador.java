@@ -18,9 +18,6 @@ public class Jugador extends Objeto {
         super(textura, x, y);
     }
 
-
-
-
     //Se llama desde el metodo render
     public void dibujar(SpriteBatch batch) {
         sprite.draw(batch);
@@ -51,8 +48,8 @@ public class Jugador extends Objeto {
         if (sprite.getY() < 0)
             sprite.setY(1);
 
-        if (sprite.getY() > 870)
-            sprite.setY(869);
+        if (sprite.getY() > 850)
+            sprite.setY(849);
 
     }
 

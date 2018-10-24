@@ -3,8 +3,10 @@ package juego;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import tools.Fondo;
@@ -31,6 +33,8 @@ public class Main extends ApplicationAdapter {
 
 	private ArrayList<Esbirro> esbirros;
 	private Texture texturaEsbirro;
+	private Esbirro esbirro;
+
 
 	Fondo sky, rocks1, rocks2, clouds1, clouds2, clouds3, clouds4;
 	Fondo rocks1DUP, rocks2DUP, clouds1DUP,clouds2DUP,clouds3DUP,clouds4DUP;
@@ -40,6 +44,7 @@ public class Main extends ApplicationAdapter {
 	Random random;
 
 	ShapeRenderer shape;
+	BitmapFont font, font1;
 
 	private boolean isPaused;
 
@@ -62,6 +67,9 @@ public class Main extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		shape = new ShapeRenderer();
+		font = new BitmapFont(Gdx.files.internal("RockwellBlack.fnt"));
+		font1 = new BitmapFont(Gdx.files.internal("RockwellBlack24.fnt"));
+
 		cargarTexturas();
 		cargarObjetos();
 	}
@@ -148,17 +156,18 @@ public class Main extends ApplicationAdapter {
 
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
-			if (esbirroSpawnTimer > 5) {
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(870 - 70) + 70));
+			if (esbirroSpawnTimer > 3) {
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
+
+				/*esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
+				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));*/
 				esbirroSpawnTimer = 0;
 			}
 
@@ -220,16 +229,19 @@ public class Main extends ApplicationAdapter {
 			}
 			balas.removeAll(balasParaQuitar);
 			esbirros.removeAll(esbirrosParaQuitar);
-
-			//Color de fondo
-			Gdx.gl.glClearColor(0, 0, 0, 1);
-			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 		}
 
+		//Color de fondo
+		Gdx.gl.glClearColor(0, 0, 0, 1);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+
+
+
 		//Visualizacion de sprites en la pantalla de juego
-		batch.enableBlending();
+		//batch.enableBlending();
 		batch.begin();
+
 
 		sky.dibujar(batch);
 		rocks1.dibujar(batch);
@@ -250,6 +262,7 @@ public class Main extends ApplicationAdapter {
 		clouds4.dibujar(batch);
 		clouds4DUP.dibujar(batch);
 
+		jugador.dibujar(batch);
 
 		for (Bala bala : balas)
 			bala.dibujar(batch);
@@ -257,7 +270,42 @@ public class Main extends ApplicationAdapter {
 		for (Esbirro esbirro : esbirros)
 			esbirro.dibujar(batch);
 
-		jugador.dibujar(batch);
+
+		batch.end();
+
+		shape.begin(ShapeRenderer.ShapeType.Filled);
+		shape.setColor(Color.WHITE);
+		shape.rect(1200,0,200,900);
+		shape.end();
+
+		shape.begin(ShapeRenderer.ShapeType.Filled);
+		shape.setColor(Color.GRAY);
+		shape.rectLine(1203,0,1203,900,5);
+		shape.rectLine(1398,0,1398,900,5);
+		shape.rectLine(1203,1,1398,1,5);
+		shape.rectLine(1203,899,1398,899,5);
+		shape.end();
+
+		batch.begin();
+
+		font.draw(batch, "Game of", 1233, 870);
+		font.draw(batch, "Sorts", 1257, 847);
+
+		font1.draw(batch, "Oleada", 1250, 780);
+
+		font1.draw(batch, "Layout Actual", 1222, 680);
+
+		font1.draw(batch, "Dragon Stats", 1226, 580);
+
+		font1.draw(batch, "Arbol B de", 1240, 300);
+		font1.draw(batch, "dragones", 1245, 270);
+
+
+
+		if (isPaused == true){
+			font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
+		}
+
 
 		batch.end();
 
@@ -265,5 +313,7 @@ public class Main extends ApplicationAdapter {
 	@Override
 	public void dispose () {
 		batch.dispose();
+		shape.dispose();
+		font.dispose();
 	}
 }

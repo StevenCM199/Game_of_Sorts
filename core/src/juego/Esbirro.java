@@ -79,4 +79,12 @@ public class Esbirro extends Objeto{
         sprite.draw(batch);
 
     }
+
+    public void mostrar(){
+
+    }
+
+
+
+
 }
