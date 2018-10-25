@@ -9,11 +9,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import tools.Fondo;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
+
+import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.touchDown;
 
 public class Main extends ApplicationAdapter {
 
@@ -23,6 +25,8 @@ public class Main extends ApplicationAdapter {
 	private float deltaTime;
 
 	SpriteBatch batch;
+
+	InputListener input;
 
 	//Inicializar Sprites
 	public Jugador jugador;
@@ -46,6 +50,10 @@ public class Main extends ApplicationAdapter {
 	ShapeRenderer shape;
 	BitmapFont font, font1;
 
+
+	String ENnombre;
+
+
 	private boolean isPaused;
 
 	//Cargar texturas de los objetos
@@ -67,6 +75,7 @@ public class Main extends ApplicationAdapter {
 	public void create () {
 		batch = new SpriteBatch();
 		shape = new ShapeRenderer();
+		input = new InputListener();
 		font = new BitmapFont(Gdx.files.internal("RockwellBlack.fnt"));
 		font1 = new BitmapFont(Gdx.files.internal("RockwellBlack24.fnt"));
 
@@ -147,6 +156,8 @@ public class Main extends ApplicationAdapter {
 		}
 
 		if (isPaused == false) {
+
+
 
 
 			//Si se presiona espacio el dragon dispara una bola de fuego
@@ -267,45 +278,15 @@ public class Main extends ApplicationAdapter {
 		for (Bala bala : balas)
 			bala.dibujar(batch);
 
-		for (Esbirro esbirro : esbirros)
-			esbirro.dibujar(batch);
+		for (Esbirro esbirro : esbirros) {
+            esbirro.dibujar(batch);
+            if (Gdx.input.isTouched())
+                esbirro.mostrar();
+        }
 
-
-		batch.end();
-
-		shape.begin(ShapeRenderer.ShapeType.Filled);
-		shape.setColor(Color.WHITE);
-		shape.rect(1200,0,200,900);
-		shape.end();
-
-		shape.begin(ShapeRenderer.ShapeType.Filled);
-		shape.setColor(Color.GRAY);
-		shape.rectLine(1203,0,1203,900,5);
-		shape.rectLine(1398,0,1398,900,5);
-		shape.rectLine(1203,1,1398,1,5);
-		shape.rectLine(1203,899,1398,899,5);
-		shape.end();
-
-		batch.begin();
-
-		font.draw(batch, "Game of", 1233, 870);
-		font.draw(batch, "Sorts", 1257, 847);
-
-		font1.draw(batch, "Oleada", 1250, 780);
-
-		font1.draw(batch, "Layout Actual", 1222, 680);
-
-		font1.draw(batch, "Dragon Stats", 1226, 580);
-
-		font1.draw(batch, "Arbol B de", 1240, 300);
-		font1.draw(batch, "dragones", 1245, 270);
-
-
-
-		if (isPaused == true){
-			font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
-		}
-
+        if (isPaused == true){
+            font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
+        }
 
 		batch.end();
 
