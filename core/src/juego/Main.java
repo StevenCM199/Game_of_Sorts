@@ -3,7 +3,6 @@ package juego;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -14,8 +13,6 @@ import tools.Fondo;
 
 import java.util.ArrayList;
 import java.util.Random;
-
-import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.touchDown;
 
 public class Main extends ApplicationAdapter {
 
@@ -142,6 +139,55 @@ public class Main extends ApplicationAdapter {
         return esbirros;
     }
 
+    //Acomodo de los Dragones por edad con QUICK SORT
+	private static void QuickSort(ArrayList<Esbirro> esbirros){
+		int n = esbirros.size();
+		quickSortAux( esbirros, 0, n-1 );}
+
+	// Auxiliar para tener un mayor y menor
+	private static void quickSortAux (ArrayList<Esbirro> esbirros, int low, int high) {
+		if (low < high) {
+			int pi = partition( esbirros, low, high );
+
+			//Recursividad de la particion
+			quickSortAux( esbirros, low, pi - 1 );
+			quickSortAux( esbirros, pi + 1, high );
+		}
+	}
+
+	static int partition(ArrayList<Esbirro> esbirros, int low, int high) {
+		int pivot = esbirros.get( high ).edad;
+		int i = (low-1); // indice del elemento mas pequeno
+		for (int j=low; j<high; j++)
+		{
+			// compara el elemento menor(j) con el pivot
+			if (esbirros.get( j ).edad <= pivot)
+			{
+				i++;
+
+				// Cambio de posiciones
+				int temp = esbirros.get( i ).edad;
+				esbirros.get( i ).edad = esbirros.get( j ).edad;
+				esbirros.get( j ).edad = temp;
+			}
+		}
+		// Cambio de posiciones
+		int temp = esbirros.get( i+1 ).edad;
+		esbirros.get( i+1 ).edad = esbirros.get( high ).edad;
+		esbirros.get( high ).edad = temp;
+
+		return i+1;
+	}
+
+	//Funcion para imprimir el array de Esbirros
+	static void printEsbirro(ArrayList<Esbirro> esbirros)
+	{
+		int n = esbirros.size();
+		for (int i=0; i<n; ++i)
+			System.out.print(esbirros.get( i ).edad+" ");
+		System.out.println();
+	}
+
 	//Loop del juego
 	@Override
 	public void render () {
@@ -227,12 +273,18 @@ public class Main extends ApplicationAdapter {
 					if (bala.recta.overlaps(esbirro.recta)) {
 						balasParaQuitar.add(bala);
 						esbirrosParaQuitar.add(esbirro);
-						System.out.println(esbirros);
+
 						//Aqui se seleciona depende de la vez que se haya chochado
+						/*System.out.println(esbirros);
 						SelectionSort(esbirros);
 						System.out.println("Selection" + esbirros);
+
 						InsertionSort(esbirros);
-						System.out.println("Insertion" + esbirros);
+						System.out.println("Insertion" + esbirros);*/
+
+						printEsbirro( esbirros );
+						QuickSort( esbirros );
+						printEsbirro( esbirros );
                     /*if (CantidadDeColisiones==9){ CantidadDeColisiones++;InsertionSort( esbirros );
                         System.out.println( "Insertion"+esbirros );}*/
 					}
