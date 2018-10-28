@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import tools.Fondo;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Random;
 
 public class Main extends ApplicationAdapter {
@@ -188,6 +189,38 @@ public class Main extends ApplicationAdapter {
 		System.out.println();
 	}
 
+	//Para acomodar los Dragones en un Arbol AVL por edades
+    private static void TreeAVL(ArrayList<Esbirro> esbirros) {
+
+        AVLTree treeAVL = new AVLTree();
+
+        for (int i=0; i<esbirros.size();i++) {
+            treeAVL.root = treeAVL.insert( treeAVL.root, esbirros.get( i ).edad);
+        }
+
+        /*//Lista de las edades
+        LinkedList ListaNodos = null;
+        ListaNodos.add(treeAVL.preOrder( treeAVL.root ));*/
+
+        /*for (int i=0; i<ListaNodos.size(); i++){
+            System.out.print( ListaNodos.get( i ) +" ");
+        }*/
+
+        /*for (int i=0; i<lista1.length; i++){
+
+            for (int j=0; j<lista2.length; j++) {
+                if (lista1[i]==lista2[j]){
+                    int x = lista2[i];
+                    lista2[i]=lista1[i];
+                    lista2[j]=x;
+                }
+            }
+            int j=0;
+        }*/
+
+    }
+
+
 	//Loop del juego
 	@Override
 	public void render () {
@@ -276,15 +309,19 @@ public class Main extends ApplicationAdapter {
 
 						//Aqui se seleciona depende de la vez que se haya chochado
 						/*System.out.println(esbirros);
+
 						SelectionSort(esbirros);
 						System.out.println("Selection" + esbirros);
 
 						InsertionSort(esbirros);
-						System.out.println("Insertion" + esbirros);*/
+						System.out.println("Insertion" + esbirros);
 
 						printEsbirro( esbirros );
 						QuickSort( esbirros );
-						printEsbirro( esbirros );
+						printEsbirro( esbirros );*/
+
+						TreeAVL( esbirros );
+
                     /*if (CantidadDeColisiones==9){ CantidadDeColisiones++;InsertionSort( esbirros );
                         System.out.println( "Insertion"+esbirros );}*/
 					}
