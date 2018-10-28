@@ -1,5 +1,7 @@
 package juego;
 
+import java.util.LinkedList;
+
 public class AVLTree {
 
     AVLNode root = null;
@@ -104,11 +106,20 @@ public class AVLTree {
     // A utility function to print preorder traversal
     // of the tree.
     // The function also prints height of every node
-    void preOrder(AVLNode node) {
+    void preOrder(AVLNode node, LinkedList lista) {
         if (node != null) {
-            System.out.print(node.getKey() + " ");
-            preOrder(node.getLeft());
-            preOrder(node.getRight());
+            lista.add(node.getKey());
+            preOrder(node.getLeft(),lista);
+            preOrder(node.getRight(),lista);
         }
     }
+
+    void preOrderTree(AVLNode node) {
+        if (node != null) {
+            System.out.print(node.getKey() + " ");
+            preOrderTree(node.getLeft());
+            preOrderTree(node.getRight());
+        }
+    }
+
 }

@@ -198,26 +198,33 @@ public class Main extends ApplicationAdapter {
             treeAVL.root = treeAVL.insert( treeAVL.root, esbirros.get( i ).edad);
         }
 
-        /*//Lista de las edades
-        LinkedList ListaNodos = null;
-        ListaNodos.add(treeAVL.preOrder( treeAVL.root ));*/
+        LinkedList lista = new LinkedList(  );
+        treeAVL.preOrder( treeAVL.root,lista );
 
-        /*for (int i=0; i<ListaNodos.size(); i++){
-            System.out.print( ListaNodos.get( i ) +" ");
+        /*System.out.print("Preorder traversal of constructed tree is: ");
+        treeAVL.preOrderTree(treeAVL.root);
+
+        System.out.print( "Edades antes de acomodarse: " );
+        for (int i=0; i<esbirros.size(); i++){
+            System.out.print( esbirros.get( i ).edad +" ");
         }*/
 
-        /*for (int i=0; i<lista1.length; i++){
-
-            for (int j=0; j<lista2.length; j++) {
-                if (lista1[i]==lista2[j]){
-                    int x = lista2[i];
-                    lista2[i]=lista1[i];
-                    lista2[j]=x;
+        for (int i=0; i<lista.size(); i++){
+            for (int j=0; j<esbirros.size(); j++) {
+                int eD =((Integer) lista.get( i )).intValue();
+                if (eD==esbirros.get( j ).edad){
+                    Esbirro x = esbirros.get( i );
+                    esbirros.set( i, esbirros.get( j ));
+                    esbirros.set( j,x );
                 }
             }
             int j=0;
-        }*/
+        }
 
+        /*System.out.print( "Edades despues de acomodarse: " );
+        for (int i=0; i<esbirros.size(); i++){
+            System.out.print( esbirros.get( i ).edad +" ");
+        }*/
     }
 
 
