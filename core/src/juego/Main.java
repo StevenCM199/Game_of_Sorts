@@ -233,10 +233,11 @@ public class Main extends ApplicationAdapter {
     //posicion inicial para cada esbirro
 
     private static void ReacomodoDeEsbirros (ArrayList<Esbirro> esbirros) {
-        int yPosicion = 640;
+        int yPosicion = 670;
         for (int i = 0; i < esbirros.size(); i++) {
             esbirros.get( i ).sprite.setY( yPosicion );
-            if (yPosicion > 90) {
+            esbirros.get( i ).recta.y=yPosicion;
+            if (yPosicion > 120) {
                 yPosicion -= 60;
             } else {
                 yPosicion = 640;
