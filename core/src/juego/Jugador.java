@@ -20,48 +20,51 @@ public class Jugador extends Objeto {
         super(textura, x, y);
     }
 
-    public Rectangle recta = new Rectangle(x,y,1100,500);
+    public Rectangle recta = new Rectangle(x,y,ancho,alto);
 
 
     //Se llama desde el metodo render
     public void dibujar(SpriteBatch batch) {
+        recta.setSize(70,70);
         sprite.setSize(70,70);
         sprite.draw(batch);
+
     }
 
     public void mover(){
 
-        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             sprite.translateX(-velocidad);
             recta.x -= velocidad;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             sprite.translateX(velocidad);
             recta.x += velocidad;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.UP))
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             sprite.translateY(velocidad);
             recta.y += velocidad;
-
-        if (Gdx.input.isKeyPressed(Input.Keys.DOWN))
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             sprite.translateY(-velocidad);
             recta.y -= velocidad;
-
-        if (sprite.getX() < 0)
+        }
+        if (sprite.getX() < 0) {
             sprite.setX(1);
             recta.setX(1);
-
-        if (sprite.getX() > 1200)
+        }
+        if (sprite.getX() > 1200) {
             sprite.setX(1199);
             recta.setX(1199);
-
-        if (sprite.getY() < 0)
+        }
+        if (sprite.getY() < 0) {
             sprite.setY(1);
             recta.setY(1);
-
-        if (sprite.getY() > 850)
+        }
+        if (sprite.getY() > 850) {
             sprite.setY(849);
             recta.setY(849);
+        }
     }
 
     private void setX(int x){
