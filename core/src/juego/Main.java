@@ -334,27 +334,13 @@ public class Main extends ApplicationAdapter {
 					if (bala.recta.overlaps(esbirro.recta)) {
 						balasParaQuitar.add(bala);
 						esbirrosParaQuitar.add(esbirro);
-
+						CantidadDeColisiones+=1;
 						//Aqui se seleciona depende de la vez que se haya chochado
-						/*System.out.println(esbirros);
-
-						SelectionSort(esbirros);
-						System.out.println("Selection" + esbirros);*/
-
-						InsertionSort(esbirros);
-						/*System.out.println("Insertion" + esbirros);
-
-						printEsbirro( esbirros );
-						QuickSort( esbirros );
-						printEsbirro( esbirros );*/
-
-						//TreeAVL( esbirros );
-
-                    /*if (CantidadDeColisiones==1){ CantidadDeColisiones++;InsertionSort( esbirros );
-                        System.out.println( "Insertion"+esbirros );}*/
-
-                        //Se reacomodan en la posicion Y
-                        ReacomodoDeEsbirros( esbirros );
+						if (CantidadDeColisiones==1){ SelectionSort(esbirros); }
+						if (CantidadDeColisiones==2){ InsertionSort(esbirros);}
+						if (CantidadDeColisiones==3){ QuickSort( esbirros );}
+						if (CantidadDeColisiones==4){ TreeAVL( esbirros );CantidadDeColisiones=0; }
+						ReacomodoDeEsbirros( esbirros );
 					}
 				}
 			}
