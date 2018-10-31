@@ -316,7 +316,7 @@ public class Main extends ApplicationAdapter {
 			//esbirroFireTimer -= deltaTime;
 			for (Esbirro esbirro : esbirros) {
 				esbirro.velocidadRecarga -= 1 * deltaTime;
-				System.out.println(esbirro.velocidadRecarga);
+				//System.out.println(esbirro.velocidadRecarga);
 
 				esbirro.update();
 
@@ -367,11 +367,17 @@ public class Main extends ApplicationAdapter {
 					}
 				}
 			}
+			for( Bala bala : balasEnemigas){
+				if (bala.recta.overlaps(jugador.recta)) {
+					balasParaQuitar.add(bala);
+					System.out.println("choque");
+				}
+			}
 			balas.removeAll(balasParaQuitar);
 			esbirros.removeAll(esbirrosParaQuitar);
 		}
 
-		//Color de fondo
+			//Color de fondo
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -415,10 +421,6 @@ public class Main extends ApplicationAdapter {
             if (Gdx.input.isTouched())
                 esbirro.mostrar();
         }
-
-
-
-
 
         if (isPaused == true){
             font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
