@@ -1,12 +1,9 @@
 package juego;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
-
-import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.touchDown;
 
 
 //Clase de los dragones normales
@@ -16,7 +13,7 @@ public class Esbirro extends Objeto{
 
     String nombre = Dragon.nombreD;
     String clase = Dragon.claseD;
-    int velocidadRecarga = Dragon.velocidadD;
+    float velocidadRecarga = Dragon.velocidadD;
     int edad = Dragon.edadD;
     int hitPoints = Dragon.resistenciaD;
     String padre = "PadreDragon";
@@ -45,7 +42,7 @@ public class Esbirro extends Objeto{
         return nombre;
     }
 
-    public int getVelocidadRecarga() {
+    public float getVelocidadRecarga() {
         return velocidadRecarga;
     }
 
@@ -74,11 +71,10 @@ public class Esbirro extends Objeto{
 
     public void update(){
         sprite.translateX(-velocidad);
-
         recta.x -= velocidad;
+
         if (sprite.getX() < 0)
             quitar = true;
-
     }
 
     public void updateY(int y2){

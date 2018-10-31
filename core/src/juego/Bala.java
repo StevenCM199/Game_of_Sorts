@@ -17,7 +17,7 @@ public class Bala extends Objeto{
     float ancho = sprite.getWidth();
     float alto = sprite.getHeight();
 
-    public Rectangle recta = new Rectangle(x,y,30,30);
+    public Rectangle recta = new Rectangle(x,y,ancho,alto);
 
     public static final int velocidad = 7;
     public boolean quitar = false;
@@ -28,13 +28,20 @@ public class Bala extends Objeto{
         sprite.translateX(velocidad);
         recta.x += velocidad;
 
-
         if (sprite.getX() > 1250)
             quitar = true;
     }
 
-    public void dibujar(SpriteBatch batch) {
+    public void updateEnemy(){
+        sprite.translateX(-velocidad);
+        recta.x -= velocidad;
 
+        if (sprite.getX() < 0)
+            quitar = true;
+    }
+
+
+    public void dibujar(SpriteBatch batch) {
         sprite.setSize(42,40);
         recta.setSize(sprite.getWidth(),sprite.getHeight());
         sprite.draw(batch);

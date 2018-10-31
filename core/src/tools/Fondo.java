@@ -9,7 +9,7 @@ public class Fondo extends Objeto {
 
     float x = sprite.getX();
     float y = sprite.getY();
-    private float ANCHO = sprite.getWidth();
+
 
 
     public Fondo(Texture textura, float x, float y) {
