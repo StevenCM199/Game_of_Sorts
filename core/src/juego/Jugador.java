@@ -12,7 +12,7 @@ public class Jugador extends Objeto {
     private int x;
     private int y;
 
-    private int velocidad = 4;
+    private int velocidad = 7;
 
     public Jugador(Texture textura, int x, int y) {
         super(textura, x, y);

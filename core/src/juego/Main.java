@@ -17,6 +17,9 @@ import java.util.Random;
 
 public class Main extends ApplicationAdapter {
 
+    //posicion inicial para cada esbirro
+    //int yPosicion = 640;
+
     //Para elegir con cual Ordenamiento se hace los dragones
     int CantidadDeColisiones = 0;
 
@@ -34,7 +37,7 @@ public class Main extends ApplicationAdapter {
 	private Texture texturaBala;
 
 	private ArrayList<Esbirro> esbirros;
-	private Texture texturaEsbirro;
+	private Texture texturaEsbirro, texturaEsbirro2;
 	private Esbirro esbirro;
 
 
@@ -59,6 +62,7 @@ public class Main extends ApplicationAdapter {
 		texturaJugador = new Texture("jugador.png");
 		texturaBala = new Texture("bala.png");
 		texturaEsbirro = new Texture("enemy.png");
+        texturaEsbirro2 = new Texture("enemy2.png");
 		texturaSky = new Texture("sky.png");
 		texturaRocks1 = new Texture("rocks_1.png");
 		texturaRocks2 = new Texture("rocks_2.png");
@@ -83,7 +87,7 @@ public class Main extends ApplicationAdapter {
 
 	//Precargar objetos
 	private void cargarObjetos() {
-		jugador = new Jugador(texturaJugador,30,300);
+		jugador = new Jugador(texturaJugador,30,360);
 		balas = new ArrayList<Bala>();
 		esbirros = new ArrayList<Esbirro>();
 		random = new Random();
@@ -226,6 +230,19 @@ public class Main extends ApplicationAdapter {
             System.out.print( esbirros.get( i ).edad +" ");
         }*/
     }
+    //posicion inicial para cada esbirro
+
+    private static void ReacomodoDeEsbirros (ArrayList<Esbirro> esbirros) {
+        int yPosicion = 640;
+        for (int i = 0; i < esbirros.size(); i++) {
+            esbirros.get( i ).sprite.setY( yPosicion );
+            if (yPosicion > 90) {
+                yPosicion -= 60;
+            } else {
+                yPosicion = 640;
+            }
+        }
+    }
 
 
 	//Loop del juego
@@ -253,20 +270,23 @@ public class Main extends ApplicationAdapter {
 
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
-			if (esbirroSpawnTimer > 3) {
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
-
-				/*esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));
-				esbirros.add(new Esbirro(texturaEsbirro, 1200, random.nextInt(860 - 60) + 60));*/
+			if (esbirroSpawnTimer > 7) {
+				esbirros.add(new Esbirro( texturaEsbirro,1150,640 ));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 580));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, 520));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 460));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, 400));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 340));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, 280));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 220));
+				esbirros.add(new Esbirro(texturaEsbirro, 1150, 160));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 90));
 				esbirroSpawnTimer = 0;
 			}
+
+            /*for ( int i=0; i<esbirros.size(); i++) {
+                balas.add( new Bala( texturaBala, esbirros.get( i ).getposX(), esbirros.get( i ).getposY() ) );
+            }*/
 
 			//Movimiento de las bolas de fuego
 			ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
@@ -318,19 +338,22 @@ public class Main extends ApplicationAdapter {
 						/*System.out.println(esbirros);
 
 						SelectionSort(esbirros);
-						System.out.println("Selection" + esbirros);
+						System.out.println("Selection" + esbirros);*/
 
 						InsertionSort(esbirros);
-						System.out.println("Insertion" + esbirros);
+						/*System.out.println("Insertion" + esbirros);
 
 						printEsbirro( esbirros );
 						QuickSort( esbirros );
 						printEsbirro( esbirros );*/
 
-						TreeAVL( esbirros );
+						//TreeAVL( esbirros );
 
-                    /*if (CantidadDeColisiones==9){ CantidadDeColisiones++;InsertionSort( esbirros );
+                    /*if (CantidadDeColisiones==1){ CantidadDeColisiones++;InsertionSort( esbirros );
                         System.out.println( "Insertion"+esbirros );}*/
+
+                        //Se reacomodan en la posicion Y
+                        ReacomodoDeEsbirros( esbirros );
 					}
 				}
 			}

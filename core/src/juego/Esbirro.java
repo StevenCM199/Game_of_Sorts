@@ -65,6 +65,10 @@ public class Esbirro extends Objeto{
         return clase;
     }
 
+    float getposX() { return sprite.getX(); }
+
+    float getposY() { return sprite.getY(); }
+
     public boolean quitar = false;
 
 
@@ -72,14 +76,13 @@ public class Esbirro extends Objeto{
         sprite.translateX(-velocidad);
 
         recta.x -= velocidad;
-        if (sprite.getX() < 100)
+        if (sprite.getX() < 0)
             quitar = true;
 
     }
 
-    public void updateXY(int x, int y){
-        sprite.translateX(x);
-        sprite.translateY( y );
+    public void updateY(int y2){
+        y=y2;
     }
 
     public void dibujar(SpriteBatch batch) {
