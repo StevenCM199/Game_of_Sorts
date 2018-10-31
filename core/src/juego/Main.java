@@ -34,12 +34,7 @@ public class Main extends ApplicationAdapter {
 	private Texture texturaJugador;
 
 	private ArrayList<Bala> balas;
-
-	private ArrayList<Bala> balasEnemigas;
-
-
-
-	private Texture texturaBala, texturaBalaEnemy;
+	private Texture texturaBala;
 
 	private ArrayList<Esbirro> esbirros;
 	private Texture texturaEsbirro, texturaEsbirro2;
@@ -56,9 +51,9 @@ public class Main extends ApplicationAdapter {
 	ShapeRenderer shape;
 	BitmapFont font, font1;
 
+
 	String ENnombre;
 
-	float esbirroFireTimer;
 
 	private boolean isPaused;
 
@@ -66,7 +61,6 @@ public class Main extends ApplicationAdapter {
 	private void cargarTexturas(){
 		texturaJugador = new Texture("jugador.png");
 		texturaBala = new Texture("bala.png");
-		texturaBalaEnemy = new Texture ("balaEnemiga.png");
 		texturaEsbirro = new Texture("enemy.png");
         texturaEsbirro2 = new Texture("enemy2.png");
 		texturaSky = new Texture("sky.png");
@@ -95,7 +89,6 @@ public class Main extends ApplicationAdapter {
 	private void cargarObjetos() {
 		jugador = new Jugador(texturaJugador,30,360);
 		balas = new ArrayList<Bala>();
-		balasEnemigas = new ArrayList<Bala>();
 		esbirros = new ArrayList<Esbirro>();
 		random = new Random();
 		sky = new Fondo(texturaSky,0,0);
@@ -278,8 +271,7 @@ public class Main extends ApplicationAdapter {
 
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
-			//System.out.println(esbirroSpawnTimer);
-			if (esbirroSpawnTimer > 5) {
+			if (esbirroSpawnTimer > 7) {
 				esbirros.add(new Esbirro( texturaEsbirro,1150,640 ));
 				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 580));
 				esbirros.add(new Esbirro(texturaEsbirro, 1150, 520));
@@ -305,26 +297,11 @@ public class Main extends ApplicationAdapter {
 				if (bala.quitar)
 					balasParaQuitar.add(bala);
 			}
-			for (Bala bala : balasEnemigas) {
-				bala.updateEnemy();
-				if (bala.quitar)
-					balasParaQuitar.add(bala);
-			}
 
 			//Movimiento de los esbirros
 			ArrayList<Esbirro> esbirrosParaQuitar = new ArrayList<Esbirro>();
-			//esbirroFireTimer -= deltaTime;
 			for (Esbirro esbirro : esbirros) {
-				esbirro.velocidadRecarga -= 1 * deltaTime;
-				//System.out.println(esbirro.velocidadRecarga);
-
 				esbirro.update();
-
-				if (esbirro.velocidadRecarga < 0){
-					balasEnemigas.add(new Bala(texturaBalaEnemy,esbirro.getposX(), esbirro.getposY()));
-					esbirro.velocidadRecarga = random.nextInt((4)+1);
-				}
-
 				if (esbirro.quitar)
 					esbirrosParaQuitar.add(esbirro);
 
@@ -367,17 +344,11 @@ public class Main extends ApplicationAdapter {
 					}
 				}
 			}
-			for( Bala bala : balasEnemigas){
-				if (bala.recta.overlaps(jugador.recta)) {
-					balasParaQuitar.add(bala);
-					System.out.println("choque");
-				}
-			}
 			balas.removeAll(balasParaQuitar);
 			esbirros.removeAll(esbirrosParaQuitar);
 		}
 
-			//Color de fondo
+		//Color de fondo
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -411,9 +382,6 @@ public class Main extends ApplicationAdapter {
 		jugador.dibujar(batch);
 
 		for (Bala bala : balas)
-			bala.dibujar(batch);
-
-		for (Bala bala : balasEnemigas)
 			bala.dibujar(batch);
 
 		for (Esbirro esbirro : esbirros) {
