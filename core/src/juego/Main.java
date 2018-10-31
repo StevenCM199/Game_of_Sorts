@@ -280,16 +280,16 @@ public class Main extends ApplicationAdapter {
 			esbirroSpawnTimer += 1 * deltaTime;
 			//System.out.println(esbirroSpawnTimer);
 			if (esbirroSpawnTimer > 5) {
-				esbirros.add(new Esbirro( texturaEsbirro,1150,640 ));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 580));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, 520));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 460));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, 400));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 340));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, 280));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 220));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, 160));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 90));
+				esbirros.add(new Esbirro( texturaEsbirro,950,640 ));
+				esbirros.add(new Esbirro(texturaEsbirro2, 950, 580));
+				//esbirros.add(new Esbirro(texturaEsbirro3, 950, 520));
+				esbirros.add(new Esbirro(texturaEsbirro, 950, 460));
+				esbirros.add(new Esbirro(texturaEsbirro2, 950, 400));
+				//esbirros.add(new Esbirro(texturaEsbirro3, 950, 340));
+				esbirros.add(new Esbirro(texturaEsbirro, 950, 280));
+				esbirros.add(new Esbirro(texturaEsbirro2, 950, 220));
+				//esbirros.add(new Esbirro(texturaEsbirro3, 950, 160));
+				esbirros.add(new Esbirro(texturaEsbirro, 950, 90));
 				esbirroSpawnTimer = 0;
 			}
 
