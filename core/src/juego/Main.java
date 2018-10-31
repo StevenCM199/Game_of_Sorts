@@ -51,6 +51,7 @@ public class Main extends ApplicationAdapter {
 	Texture texturaSky, texturaRocks1, texturaRocks2, texturaClouds1, texturaClouds2, texturaClouds3, texturaClouds4;
 
 	float esbirroSpawnTimer;
+    float RondaTimer;
 	Random random;
 
 	ShapeRenderer shape;
@@ -268,8 +269,7 @@ public class Main extends ApplicationAdapter {
 
 		if (isPaused == false) {
 
-
-
+            RondaTimer +=1*deltaTime;
 
 			//Si se presiona espacio el dragon dispara una bola de fuego
 			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -421,6 +421,10 @@ public class Main extends ApplicationAdapter {
             if (Gdx.input.isTouched())
                 esbirro.mostrar();
         }
+
+        if (RondaTimer>3 && RondaTimer<103){ font.draw(batch, "Primera Ronda", 70, 80); }
+
+        if (RondaTimer>105 && RondaTimer<203){ font.draw(batch, "Segunda Ronda", 70, 80); }
 
         if (isPaused == true){
             font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
