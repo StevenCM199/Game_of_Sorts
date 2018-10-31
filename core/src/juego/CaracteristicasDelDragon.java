@@ -5,7 +5,7 @@ import java.util.Random;
 public class CaracteristicasDelDragon {
 
     Random numero = new Random();
-    int velocidadD = (numero.nextInt(1000)+1); //Velocidad del Dragon
+    float velocidadD = (numero.nextInt(4)+1); //Velocidad del Dragon
     int edadD = (numero.nextInt(100)+1); //Edad del Dragon
     int resistenciaD = (numero.nextInt(3)+1); //Resistencia del Dragon
 
@@ -34,6 +34,6 @@ public class CaracteristicasDelDragon {
     public String getNombreD() { return nombreD; }
     public String getClaseD() {return claseD;}
     public int getResistenciaD() { return resistenciaD; }
-    public int getVelocidadD() { return velocidadD; }
+    public float getVelocidadD() { return velocidadD; }
 
 }

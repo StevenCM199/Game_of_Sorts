@@ -33,6 +33,18 @@ public class Bala extends Objeto{
             quitar = true;
     }
 
+    public void updateEnemy(){
+        sprite.translateX(-velocidad);
+        recta.x -= velocidad;
+
+        if (sprite.getX() < 0)
+            quitar = true;
+    }
+
+
+
+
+
     public void dibujar(SpriteBatch batch) {
 
         sprite.setSize(42,40);

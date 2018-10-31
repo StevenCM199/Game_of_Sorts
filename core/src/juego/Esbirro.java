@@ -16,7 +16,7 @@ public class Esbirro extends Objeto{
 
     String nombre = Dragon.nombreD;
     String clase = Dragon.claseD;
-    int velocidadRecarga = Dragon.velocidadD;
+    float velocidadRecarga = Dragon.velocidadD;
     int edad = Dragon.edadD;
     int hitPoints = Dragon.resistenciaD;
     String padre = "PadreDragon";
@@ -45,7 +45,7 @@ public class Esbirro extends Objeto{
         return nombre;
     }
 
-    public int getVelocidadRecarga() {
+    public float getVelocidadRecarga() {
         return velocidadRecarga;
     }
 
