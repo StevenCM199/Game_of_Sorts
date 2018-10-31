@@ -42,7 +42,7 @@ public class Main extends ApplicationAdapter {
 	private Texture texturaBala, texturaBalaEnemy;
 
 	private ArrayList<Esbirro> esbirros;
-	private Texture texturaEsbirro, texturaEsbirro2;
+	private Texture texturaEsbirro, texturaEsbirro2, texturaEsbirro3;
 	private Esbirro esbirro;
 
 
@@ -70,6 +70,7 @@ public class Main extends ApplicationAdapter {
 		texturaBalaEnemy = new Texture ("balaEnemiga.png");
 		texturaEsbirro = new Texture("enemy.png");
         texturaEsbirro2 = new Texture("enemy2.png");
+		texturaEsbirro3 = new Texture("enemy3.png");
 		texturaSky = new Texture("sky.png");
 		texturaRocks1 = new Texture("rocks_1.png");
 		texturaRocks2 = new Texture("rocks_2.png");
@@ -282,13 +283,13 @@ public class Main extends ApplicationAdapter {
 			if (esbirroSpawnTimer > 5) {
 				esbirros.add(new Esbirro( texturaEsbirro,950,640 ));
 				esbirros.add(new Esbirro(texturaEsbirro2, 950, 580));
-				//esbirros.add(new Esbirro(texturaEsbirro3, 950, 520));
+				esbirros.add(new Esbirro(texturaEsbirro3, 950, 520));
 				esbirros.add(new Esbirro(texturaEsbirro, 950, 460));
 				esbirros.add(new Esbirro(texturaEsbirro2, 950, 400));
-				//esbirros.add(new Esbirro(texturaEsbirro3, 950, 340));
+				esbirros.add(new Esbirro(texturaEsbirro3, 950, 340));
 				esbirros.add(new Esbirro(texturaEsbirro, 950, 280));
 				esbirros.add(new Esbirro(texturaEsbirro2, 950, 220));
-				//esbirros.add(new Esbirro(texturaEsbirro3, 950, 160));
+				esbirros.add(new Esbirro(texturaEsbirro3, 950, 160));
 				esbirros.add(new Esbirro(texturaEsbirro, 950, 90));
 				esbirroSpawnTimer = 0;
 			}
