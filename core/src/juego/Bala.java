@@ -33,8 +33,8 @@ public class Bala extends Objeto{
     }
 
     public void updateEnemy(){
-        sprite.translateX(-velocidad);
-        recta.x -= velocidad;
+        sprite.translateX(-5);
+        recta.x -= 5;
 
         if (sprite.getX() < 0)
             quitar = true;
@@ -45,10 +45,13 @@ public class Bala extends Objeto{
         sprite.setSize(42,40);
         recta.setSize(sprite.getWidth(),sprite.getHeight());
         sprite.draw(batch);
-
     }
 
-
+    public void dibujarEnemigo(SpriteBatch batch) {
+        sprite.setSize(25,25);
+        recta.setSize(20,20);
+        sprite.draw(batch);
+    }
 
 
 }

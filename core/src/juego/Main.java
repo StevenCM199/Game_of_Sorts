@@ -328,7 +328,6 @@ public class Main extends ApplicationAdapter {
 
 				if (esbirro.quitar)
 					esbirrosParaQuitar.add(esbirro);
-
 			}
 
 			//Movimiento del jugador
@@ -355,15 +354,20 @@ public class Main extends ApplicationAdapter {
 			//Colisiones
 			for (Bala bala : balas) {
 				for (Esbirro esbirro : esbirros) {
-					if (bala.recta.overlaps(esbirro.recta)) {
+					if (bala.recta.overlaps(esbirro.recta) && esbirro.hitPoints < 1) {
 						balasParaQuitar.add(bala);
 						esbirrosParaQuitar.add(esbirro);
-						CantidadDeColisiones+=1;
+
+						CantidadDeColisiones += 1;
 						//Aqui se seleciona depende de la vez que se haya chochado
 						if (CantidadDeColisiones==1){ SelectionSort(esbirros); }
 						if (CantidadDeColisiones==2){ InsertionSort(esbirros);}
 						if (CantidadDeColisiones==3){ QuickSort( esbirros );}
 						if (CantidadDeColisiones==4){ TreeAVL( esbirros );CantidadDeColisiones=0; }
+						else{
+							balasParaQuitar.add(bala);
+							esbirro.hitPoints -= 1;
+						}
 						ReacomodoDeEsbirros( esbirros );
 					}
 				}
@@ -375,6 +379,7 @@ public class Main extends ApplicationAdapter {
 				}
 			}
 			balas.removeAll(balasParaQuitar);
+			balasEnemigas.removeAll(balasParaQuitar);
 			esbirros.removeAll(esbirrosParaQuitar);
 		}
 
@@ -415,7 +420,7 @@ public class Main extends ApplicationAdapter {
 			bala.dibujar(batch);
 
 		for (Bala bala : balasEnemigas)
-			bala.dibujar(batch);
+			bala.dibujarEnemigo(batch);
 
 		for (Esbirro esbirro : esbirros) {
             esbirro.dibujar(batch);
