@@ -23,6 +23,8 @@ public class Main extends ApplicationAdapter {
     //Para elegir con cual Ordenamiento se hace los dragones
     int CantidadDeColisiones = 0;
 
+    int Ronda = 1;
+
 	private float deltaTime;
 
 	SpriteBatch batch;
@@ -46,6 +48,7 @@ public class Main extends ApplicationAdapter {
 	Texture texturaSky, texturaRocks1, texturaRocks2, texturaClouds1, texturaClouds2, texturaClouds3, texturaClouds4;
 
 	float esbirroSpawnTimer;
+    float relogDeTandas;
 	Random random;
 
 	ShapeRenderer shape;
@@ -238,6 +241,9 @@ public class Main extends ApplicationAdapter {
         for (int i = 0; i < esbirros.size(); i++) {
             esbirros.get( i ).sprite.setY( yPosicion );
             esbirros.get( i ).recta.y=yPosicion;
+            /*if (esbirros.get( i ).sprite.getY() > (esbirros.get( i+1 ).sprite.getY()-50) && esbirros.get( i ).sprite.getY() < esbirros.get( i+1 ).sprite.getY()+50){
+                esbirros.get( i ).sprite.setX( esbirros.get( i ).sprite.getX()+200 );
+            }*/
             if (yPosicion > 120) {
                 yPosicion -= 60;
             } else {
@@ -262,8 +268,7 @@ public class Main extends ApplicationAdapter {
 
 		if (isPaused == false) {
 
-
-
+            relogDeTandas += 1 * deltaTime;
 
 			//Si se presiona espacio el dragon dispara una bola de fuego
 			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
@@ -272,23 +277,19 @@ public class Main extends ApplicationAdapter {
 
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
-			if (esbirroSpawnTimer > 10) {
-				esbirros.add(new Esbirro( texturaEsbirro,1150,640 ));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 580));
-				esbirros.add(new Esbirro(texturaEsbirro3, 1150, 520));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, 460));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 400));
-				esbirros.add(new Esbirro(texturaEsbirro3, 1150, 340));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, 280));
-				esbirros.add(new Esbirro(texturaEsbirro2, 1150, 220));
-				esbirros.add(new Esbirro(texturaEsbirro3, 1150, 160));
-				esbirros.add(new Esbirro(texturaEsbirro, 1150, 90));
+			if (esbirroSpawnTimer > 4) {
+				esbirros.add(new Esbirro( texturaEsbirro,950,640 ));
+				esbirros.add(new Esbirro(texturaEsbirro2, 950, 580));
+				esbirros.add(new Esbirro(texturaEsbirro3, 950, 520));
+				esbirros.add(new Esbirro(texturaEsbirro, 950, 460));
+				esbirros.add(new Esbirro(texturaEsbirro2, 950, 400));
+				esbirros.add(new Esbirro(texturaEsbirro3, 950, 340));
+				esbirros.add(new Esbirro(texturaEsbirro, 950, 280));
+				esbirros.add(new Esbirro(texturaEsbirro2, 950, 220));
+				esbirros.add(new Esbirro(texturaEsbirro3, 950, 160));
+				esbirros.add(new Esbirro(texturaEsbirro, 950, 90));
 				esbirroSpawnTimer = 0;
 			}
-
-            /*for ( int i=0; i<esbirros.size(); i++) {
-                balas.add( new Bala( texturaBala, esbirros.get( i ).getposX(), esbirros.get( i ).getposY() ) );
-            }*/
 
 			//Movimiento de las bolas de fuego
 			ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
@@ -390,6 +391,10 @@ public class Main extends ApplicationAdapter {
             if (Gdx.input.isTouched())
                 esbirro.mostrar();
         }
+
+        if (relogDeTandas>3 && relogDeTandas<103){font.draw(batch, "Ronda:"+Ronda, 60, 80);}
+
+        if (relogDeTandas>105 && relogDeTandas<203){ Ronda= 2; font.draw(batch, "Ronda:"+Ronda, 60, 80);}
 
         if (isPaused == true){
             font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
