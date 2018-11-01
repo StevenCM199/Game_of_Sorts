@@ -7,7 +7,7 @@ public class CaracteristicasDelDragon {
     Random numero = new Random();
     float velocidadD = (numero.nextInt(4)+1); //Velocidad del Dragon
     int edadD = (numero.nextInt(100)+1); //Edad del Dragon
-    int resistenciaD = (numero.nextInt(3)+1); //Resistencia del Dragon
+    int resistenciaD = (numero.nextInt(2)+1); //Resistencia del Dragon
 
     //Nombre del Dragon
     NomAleatoriosDragones nombre = new NomAleatoriosDragones();

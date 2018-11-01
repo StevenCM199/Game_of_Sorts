@@ -75,13 +75,13 @@ public class Jugador extends Objeto {
             sprite.setX(1199);
             recta.setX(1199);
         }
-        if (sprite.getY() < 0) {
-            sprite.setY(1);
-            recta.setY(1);
+        if (sprite.getY() < 50) {
+            sprite.setY(49);
+            recta.setY(49);
         }
-        if (sprite.getY() > 850) {
-            sprite.setY(849);
-            recta.setY(849);
+        if (sprite.getY() > 700) {
+            sprite.setY(699);
+            recta.setY(699);
         }
     }
 

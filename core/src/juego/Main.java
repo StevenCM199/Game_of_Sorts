@@ -41,8 +41,8 @@ public class Main extends ApplicationAdapter {
 
 	private ArrayList<Esbirro> esbirros;
 	private Texture texturaEsbirro, texturaEsbirro2, texturaEsbirro3;
-	private Esbirro esbirro;
-
+	private int killedDragons = 0;
+	private int Nronda = 1;
 
 	Fondo sky, rocks1, rocks2, clouds1, clouds2, clouds3, clouds4;
 	Fondo rocks1DUP, rocks2DUP, clouds1DUP,clouds2DUP,clouds3DUP,clouds4DUP;
@@ -55,8 +55,11 @@ public class Main extends ApplicationAdapter {
 	ShapeRenderer shape;
 	BitmapFont font, font1;
 
+	int timeFrame = 10;
+
 	boolean gameOver;
 
+	boolean PasaRonda = true;
 	private boolean isPaused;
 
 	//Cargar texturas de los objetos
@@ -276,25 +279,24 @@ public class Main extends ApplicationAdapter {
 				balas.add(new Bala(texturaBala, jugador.getX(), jugador.getY()));
 			}
 
-
-
-
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
+
 			//System.out.println(esbirroSpawnTimer);
-			if (esbirroSpawnTimer > 5) {
-				esbirros.add(new Esbirro( texturaEsbirro,950,640 ));
-				esbirros.add(new Esbirro(texturaEsbirro2, 950, 580));
-				esbirros.add(new Esbirro(texturaEsbirro3, 950, 520));
-				esbirros.add(new Esbirro(texturaEsbirro, 950, 460));
-				esbirros.add(new Esbirro(texturaEsbirro2, 950, 400));
-				esbirros.add(new Esbirro(texturaEsbirro3, 950, 340));
-				esbirros.add(new Esbirro(texturaEsbirro, 950, 280));
-				esbirros.add(new Esbirro(texturaEsbirro2, 950, 220));
-				esbirros.add(new Esbirro(texturaEsbirro3, 950, 160));
-				esbirros.add(new Esbirro(texturaEsbirro, 950, 90));
+			if (esbirroSpawnTimer > timeFrame) {
+				esbirros.add(new Esbirro( texturaEsbirro,1100,640 ));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1100, 580));
+				esbirros.add(new Esbirro(texturaEsbirro3, 1100, 520));
+				esbirros.add(new Esbirro(texturaEsbirro, 1100, 460));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1100, 400));
+				esbirros.add(new Esbirro(texturaEsbirro3, 1100, 340));
+				esbirros.add(new Esbirro(texturaEsbirro, 1100, 280));
+				esbirros.add(new Esbirro(texturaEsbirro2, 1100, 220));
+				esbirros.add(new Esbirro(texturaEsbirro3, 1100, 160));
+				esbirros.add(new Esbirro(texturaEsbirro, 1100, 90));
 				esbirroSpawnTimer = 0;
 			}
+
 
             /*for ( int i=0; i<esbirros.size(); i++) {
                 balas.add( new Bala( texturaBala, esbirros.get( i ).getposX(), esbirros.get( i ).getposY() ) );
@@ -332,6 +334,14 @@ public class Main extends ApplicationAdapter {
 					esbirrosParaQuitar.add(esbirro);
 					jugador.hitPoints -= 1;
 				}
+
+				if (esbirro.clase.equals("Comandante")){
+					esbirro.hitPoints =+ 5;
+					esbirro.velocidadRecarga = 1;
+					esbirro.sprite.setSize(100,100);
+					esbirro.clase = "Comandante ";
+				}
+
 			}
 
 			//Movimiento del jugador
@@ -364,6 +374,7 @@ public class Main extends ApplicationAdapter {
 
 						if (esbirro.hitPoints == 0) {
 							esbirrosParaQuitar.add(esbirro);
+							killedDragons += 1;
 						}
 						CantidadDeColisiones += 1;
 						//Aqui se seleciona depende de la vez que se haya chochado
@@ -381,11 +392,10 @@ public class Main extends ApplicationAdapter {
 				if (bala.recta.overlaps(jugador.recta)) {
 					balasParaQuitar.add(bala);
 					jugador.hitPoints -= 1;
-					System.out.println("choque");
 				}
 			}
 
-			if (jugador.hitPoints == 0){
+			if (jugador.hitPoints <= 0){
 				gameOver = true;
 			}
 
@@ -437,13 +447,39 @@ public class Main extends ApplicationAdapter {
                 esbirro.mostrar();
         }
 
-		font.draw(batch, "Vida: " + jugador.hitPoints, 70, 800);
+		font.draw(batch, "Vida: " + jugador.hitPoints, 70, 820);
 
-        if (RondaTimer>3 && RondaTimer<103){ font.draw(batch, "Primera Ronda", 70, 80); }
+		font.draw(batch, "Dragones eliminados: " + killedDragons, 200, 820);
 
-        if (RondaTimer>105 && RondaTimer<203){ font.draw(batch, "Segunda Ronda", 70, 80); }
+		if(Nronda < 5) {
+			font.draw(batch, "Ronda: " + Nronda, 70, 50);
+		} else{
+			font.draw(batch, "Ronda: Max.", 70, 50);
+		}
 
+        if (killedDragons == 30 && PasaRonda){
+        	Nronda += 1;
+        	timeFrame -=2;
+        	PasaRonda = false;
+		}
 
+		if (killedDragons == 70 && PasaRonda == false){
+			Nronda += 1;
+			timeFrame -=2;
+			PasaRonda = true;
+		}
+
+		if (killedDragons == 110 && PasaRonda){
+			Nronda += 1;
+			timeFrame -=2;
+			PasaRonda = false;
+		}
+
+		if (killedDragons == 200 && PasaRonda == false){
+			Nronda += 1;
+			timeFrame -=1;
+			PasaRonda = true;
+		}
 
 
 
@@ -455,6 +491,8 @@ public class Main extends ApplicationAdapter {
         	isPaused = true;
 			font.draw(batch, "Has muerto. Presiona ESC para salir", 300, 500);
 		}
+
+		System.out.println(jugador.getY());
 
 		batch.end();
 
