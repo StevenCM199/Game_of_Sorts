@@ -17,48 +17,36 @@ import java.util.Random;
 
 public class Main extends ApplicationAdapter {
 
-    //posicion inicial para cada esbirro
-    //int yPosicion = 640;
 
     //Para elegir con cual Ordenamiento se hace los dragones
     int CantidadDeColisiones = 0;
 
 	private float deltaTime;
-
 	SpriteBatch batch;
-
 	InputListener input;
 
 	//Inicializar Sprites
 	public Jugador jugador;
 	private Texture texturaJugador;
 
+	//Variables globales
 	private ArrayList<Bala> balas;
-
 	private ArrayList<Bala> balasEnemigas;
-
 	private Texture texturaBala, texturaBalaEnemy;
-
 	private ArrayList<Esbirro> esbirros;
 	private Texture texturaEsbirro, texturaEsbirro2, texturaEsbirro3;
 	private int killedDragons = 0;
 	private int Nronda = 1;
-
 	Fondo sky, rocks1, rocks2, clouds1, clouds2, clouds3, clouds4;
 	Fondo rocks1DUP, rocks2DUP, clouds1DUP,clouds2DUP,clouds3DUP,clouds4DUP;
 	Texture texturaSky, texturaRocks1, texturaRocks2, texturaClouds1, texturaClouds2, texturaClouds3, texturaClouds4;
-
 	float esbirroSpawnTimer;
     float RondaTimer;
 	Random random;
-
 	ShapeRenderer shape;
 	BitmapFont font, font1;
-
 	int timeFrame = 10;
-
 	boolean gameOver;
-
 	boolean PasaRonda = true;
 	private boolean isPaused;
 
@@ -258,20 +246,22 @@ public class Main extends ApplicationAdapter {
 	public void render () {
 		deltaTime = Gdx.graphics.getDeltaTime();
 
+		//Salir del juego con la tecla escape
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			Gdx.app.exit();
 		}
 
+		//Si se presiona Enter, pausa el juego
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 			isPaused = true;
 		}
 
+		//Para reanudar la pausa, presionar backspace
 		if (Gdx.input.isKeyJustPressed(Input.Keys.BACKSPACE) && isPaused == true)  {
 			isPaused = false;
 		}
 
 		if (isPaused == false) {
-
             RondaTimer +=1*deltaTime;
 
 			//Si se presiona espacio el dragon dispara una bola de fuego
@@ -281,8 +271,6 @@ public class Main extends ApplicationAdapter {
 
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
-
-			//System.out.println(esbirroSpawnTimer);
 			if (esbirroSpawnTimer > timeFrame) {
 				esbirros.add(new Esbirro( texturaEsbirro,1100,640 ));
 				esbirros.add(new Esbirro(texturaEsbirro2, 1100, 580));
@@ -305,6 +293,7 @@ public class Main extends ApplicationAdapter {
 			//Movimiento de las bolas de fuego
 			ArrayList<Bala> balasParaQuitar = new ArrayList<Bala>();
 
+			//Eliminar las bolas de fuego al alcanzar el borde de la pantalla
 			for (Bala bala : balas) {
 				bala.update();
 				if (bala.quitar)
@@ -316,52 +305,48 @@ public class Main extends ApplicationAdapter {
 					balasParaQuitar.add(bala);
 			}
 
-			//Movimiento de los esbirros
+			//Acciones de los enemigos
 			ArrayList<Esbirro> esbirrosParaQuitar = new ArrayList<Esbirro>();
 			//esbirroFireTimer -= deltaTime;
 			for (Esbirro esbirro : esbirros) {
 				esbirro.velocidadRecarga -= 1 * deltaTime;
-				//System.out.println(esbirro.velocidadRecarga);
-
 				esbirro.update();
 
+				//Disparar balas del enemigo
 				if (esbirro.velocidadRecarga < 0){
 					balasEnemigas.add(new Bala(texturaBalaEnemy,esbirro.getposX(), esbirro.getposY()));
 					esbirro.velocidadRecarga = random.nextInt((4)+1);
 				}
 
+				//Si un enemigo alcanza el borde de la pantalla, restarle vida al jugador
 				if (esbirro.quitar) {
 					esbirrosParaQuitar.add(esbirro);
 					jugador.hitPoints -= 1;
 				}
 
+				//Si el enemigo es un comandante, darle mas puntos de vida
 				if (esbirro.clase.equals("Comandante")){
 					esbirro.hitPoints =+ 5;
 					esbirro.velocidadRecarga = 1;
 					esbirro.sprite.setSize(100,100);
 					esbirro.clase = "Comandante ";
 				}
-
 			}
 
 			//Movimiento del jugador
 			jugador.mover();
 
+			//Movimiento del fondo
 			rocks1.mover(-0.5f);
 			rocks1DUP.mover(-0.5f);
-
 			rocks2.mover(-1);
 			rocks2DUP.mover(-1);
-
 			clouds1.mover(-2.8f);
 			clouds1DUP.mover(-2.8f);
-
 			clouds2.mover(-1.9f);
 			clouds2DUP.mover(-1.9f);
-
 			clouds3.mover(-1.2f);
 			clouds3DUP.mover(-1.2f);
-
 			clouds4.mover(-1.3f);
 			clouds4DUP.mover(-1.3f);
 
@@ -372,6 +357,7 @@ public class Main extends ApplicationAdapter {
 						balasParaQuitar.add(bala);
 						esbirro.hitPoints -= 1;
 
+						//Matar al enemigo si su vida llega a 0
 						if (esbirro.hitPoints == 0) {
 							esbirrosParaQuitar.add(esbirro);
 							killedDragons += 1;
@@ -388,13 +374,14 @@ public class Main extends ApplicationAdapter {
 				}
 			}
 
+			//Disminuir la vida del jugador si una bala lo alcanza
 			for( Bala bala : balasEnemigas){
 				if (bala.recta.overlaps(jugador.recta)) {
 					balasParaQuitar.add(bala);
 					jugador.hitPoints -= 1;
 				}
 			}
-
+			//Se la vida del jugador llega a 0 acaba el juego
 			if (jugador.hitPoints <= 0){
 				gameOver = true;
 			}
@@ -441,12 +428,15 @@ public class Main extends ApplicationAdapter {
 		for (Bala bala : balasEnemigas)
 			bala.dibujarEnemigo(batch);
 
+		//Hacer click en los enemigos para ver sus caracteristicas
 		for (Esbirro esbirro : esbirros) {
             esbirro.dibujar(batch);
             if (Gdx.input.isTouched())
                 esbirro.mostrar();
         }
 
+
+        //Texto en pantalla
 		font.draw(batch, "Vida: " + jugador.hitPoints, 70, 820);
 
 		font.draw(batch, "Dragones eliminados: " + killedDragons, 200, 820);
@@ -457,6 +447,8 @@ public class Main extends ApplicationAdapter {
 			font.draw(batch, "Ronda: Max.", 70, 50);
 		}
 
+
+		//Manejo de las rondas
         if (killedDragons == 30 && PasaRonda){
         	Nronda += 1;
         	timeFrame -=2;
@@ -482,7 +474,6 @@ public class Main extends ApplicationAdapter {
 		}
 
 
-
         if (isPaused == true && gameOver == false){
             font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
         }
@@ -492,10 +483,7 @@ public class Main extends ApplicationAdapter {
 			font.draw(batch, "Has muerto. Presiona ESC para salir", 300, 500);
 		}
 
-		System.out.println(jugador.getY());
-
 		batch.end();
-
 	}
 	@Override
 	public void dispose () {
