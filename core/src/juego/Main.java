@@ -37,8 +37,6 @@ public class Main extends ApplicationAdapter {
 
 	private ArrayList<Bala> balasEnemigas;
 
-
-
 	private Texture texturaBala, texturaBalaEnemy;
 
 	private ArrayList<Esbirro> esbirros;
@@ -57,9 +55,7 @@ public class Main extends ApplicationAdapter {
 	ShapeRenderer shape;
 	BitmapFont font, font1;
 
-	String ENnombre;
-
-	float esbirroFireTimer;
+	boolean gameOver;
 
 	private boolean isPaused;
 
@@ -254,11 +250,14 @@ public class Main extends ApplicationAdapter {
         }
     }
 
-
 	//Loop del juego
 	@Override
 	public void render () {
 		deltaTime = Gdx.graphics.getDeltaTime();
+
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
+			Gdx.app.exit();
+		}
 
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
 			isPaused = true;
@@ -276,6 +275,9 @@ public class Main extends ApplicationAdapter {
 			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				balas.add(new Bala(texturaBala, jugador.getX(), jugador.getY()));
 			}
+
+
+
 
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
@@ -326,8 +328,10 @@ public class Main extends ApplicationAdapter {
 					esbirro.velocidadRecarga = random.nextInt((4)+1);
 				}
 
-				if (esbirro.quitar)
+				if (esbirro.quitar) {
 					esbirrosParaQuitar.add(esbirro);
+					jugador.hitPoints -= 1;
+				}
 			}
 
 			//Movimiento del jugador
@@ -354,30 +358,37 @@ public class Main extends ApplicationAdapter {
 			//Colisiones
 			for (Bala bala : balas) {
 				for (Esbirro esbirro : esbirros) {
-					if (bala.recta.overlaps(esbirro.recta) && esbirro.hitPoints < 1) {
+					if (bala.recta.overlaps(esbirro.recta)) {
 						balasParaQuitar.add(bala);
-						esbirrosParaQuitar.add(esbirro);
+						esbirro.hitPoints -= 1;
 
+						if (esbirro.hitPoints == 0) {
+							esbirrosParaQuitar.add(esbirro);
+						}
 						CantidadDeColisiones += 1;
 						//Aqui se seleciona depende de la vez que se haya chochado
 						if (CantidadDeColisiones==1){ SelectionSort(esbirros); }
 						if (CantidadDeColisiones==2){ InsertionSort(esbirros);}
 						if (CantidadDeColisiones==3){ QuickSort( esbirros );}
 						if (CantidadDeColisiones==4){ TreeAVL( esbirros );CantidadDeColisiones=0; }
-						else{
-							balasParaQuitar.add(bala);
-							esbirro.hitPoints -= 1;
-						}
+
 						ReacomodoDeEsbirros( esbirros );
 					}
 				}
 			}
+
 			for( Bala bala : balasEnemigas){
 				if (bala.recta.overlaps(jugador.recta)) {
 					balasParaQuitar.add(bala);
+					jugador.hitPoints -= 1;
 					System.out.println("choque");
 				}
 			}
+
+			if (jugador.hitPoints == 0){
+				gameOver = true;
+			}
+
 			balas.removeAll(balasParaQuitar);
 			balasEnemigas.removeAll(balasParaQuitar);
 			esbirros.removeAll(esbirrosParaQuitar);
@@ -386,8 +397,6 @@ public class Main extends ApplicationAdapter {
 			//Color de fondo
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-
 
 
 		//Visualizacion de sprites en la pantalla de juego
@@ -428,13 +437,24 @@ public class Main extends ApplicationAdapter {
                 esbirro.mostrar();
         }
 
+		font.draw(batch, "Vida: " + jugador.hitPoints, 70, 800);
+
         if (RondaTimer>3 && RondaTimer<103){ font.draw(batch, "Primera Ronda", 70, 80); }
 
         if (RondaTimer>105 && RondaTimer<203){ font.draw(batch, "Segunda Ronda", 70, 80); }
 
-        if (isPaused == true){
+
+
+
+
+        if (isPaused == true && gameOver == false){
             font.draw(batch, "Pausa, presiona BackSpace para continuar", 300, 500);
         }
+
+        if (gameOver) {
+        	isPaused = true;
+			font.draw(batch, "Has muerto. Presiona ESC para salir", 300, 500);
+		}
 
 		batch.end();
 

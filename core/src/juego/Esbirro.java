@@ -17,7 +17,7 @@ public class Esbirro extends Objeto{
     int edad = Dragon.edadD;
     int hitPoints = Dragon.resistenciaD;
     String padre = "PadreDragon";
-    public static final int velocidad = 1;
+    public static final int velocidad = 5;
 
 
     float x = sprite.getX();

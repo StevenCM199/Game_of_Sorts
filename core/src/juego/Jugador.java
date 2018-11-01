@@ -14,6 +14,12 @@ public class Jugador extends Objeto {
     float ancho = sprite.getWidth();
     float alto = sprite.getHeight();
 
+    private float deltaTime;
+
+    private float HPtimer;
+
+    int hitPoints = 10;
+
     private int velocidad = 7;
 
     public Jugador(Texture textura, int x, int y) {
@@ -21,6 +27,8 @@ public class Jugador extends Objeto {
     }
 
     public Rectangle recta = new Rectangle(x,y,ancho,alto);
+
+
 
 
     //Se llama desde el metodo render
@@ -32,6 +40,16 @@ public class Jugador extends Objeto {
     }
 
     public void mover(){
+
+        deltaTime = Gdx.graphics.getDeltaTime();
+        if(hitPoints < 10) {
+            HPtimer += 1 * deltaTime;
+        }
+        if(HPtimer > 10){
+            hitPoints += 1;
+            HPtimer = 0;
+        }
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             sprite.translateX(-velocidad);
