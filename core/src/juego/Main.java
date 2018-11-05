@@ -10,10 +10,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import tools.Fondo;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Random;
+
 
 public class Main extends ApplicationAdapter {
 
@@ -26,15 +26,16 @@ public class Main extends ApplicationAdapter {
 	InputListener input;
 
 	//Inicializar Sprites
-	public Jugador jugador;
-	private Texture texturaJugador;
+	public static Jugador jugador;
+	public static Texture texturaJugador;
 
 	//Variables globales
 	private ArrayList<Bala> balas;
 	private ArrayList<Bala> balasEnemigas;
 	private Texture texturaBala, texturaBalaEnemy;
-	private ArrayList<Esbirro> esbirros;
-	private Texture texturaEsbirro, texturaEsbirro2, texturaEsbirro3;
+	public static ArrayList<Esbirro> esbirros;
+	public static ArrayList<Esbirro> TESTesbirros;
+	public static Texture texturaEsbirro, texturaEsbirro2, texturaEsbirro3;
 	private int killedDragons = 0;
 	private int Nronda = 1;
 	Fondo sky, rocks1, rocks2, clouds1, clouds2, clouds3, clouds4;
@@ -51,7 +52,7 @@ public class Main extends ApplicationAdapter {
 	private boolean isPaused;
 
 	//Cargar texturas de los objetos
-	private void cargarTexturas(){
+	void cargarTexturas(){
 		texturaJugador = new Texture("jugador.png");
 		texturaBala = new Texture("bala.png");
 		texturaBalaEnemy = new Texture ("balaEnemiga.png");
@@ -66,6 +67,7 @@ public class Main extends ApplicationAdapter {
 		texturaClouds3 = new Texture("clouds_3.png");
 		texturaClouds4 = new Texture("clouds_4.png");
 	}
+
 
 	//Inicializar objetos
 	@Override
@@ -86,6 +88,7 @@ public class Main extends ApplicationAdapter {
 		balas = new ArrayList<Bala>();
 		balasEnemigas = new ArrayList<Bala>();
 		esbirros = new ArrayList<Esbirro>();
+		TESTesbirros = new ArrayList<Esbirro>();
 		random = new Random();
 		sky = new Fondo(texturaSky,0,0);
 
@@ -110,7 +113,7 @@ public class Main extends ApplicationAdapter {
 	}
 
 	//Acomodo por edad de cada dragon SELECTION SORT
-    private static ArrayList<Esbirro> SelectionSort(ArrayList<Esbirro> esbirros){
+    public static ArrayList<Esbirro> SelectionSort(ArrayList<Esbirro> esbirros){
 
         for (int i = 0; i < esbirros.size() - 1; i++){
             int index = i;
@@ -125,7 +128,7 @@ public class Main extends ApplicationAdapter {
     }
 
     //Acomodo de Dragones por velocidad INSERTION SORT
-    private static ArrayList<Esbirro> InsertionSort(ArrayList<Esbirro> esbirros){
+    public static ArrayList<Esbirro> InsertionSort(ArrayList<Esbirro> esbirros){
         Esbirro temp;
         for (int i = 1; i < esbirros.size(); i++) {
             for(int j = i ; j > 0 ; j--){
@@ -211,7 +214,7 @@ public class Main extends ApplicationAdapter {
 
         for (int i=0; i<lista.size(); i++){
             for (int j=0; j<esbirros.size(); j++) {
-                int eD =((Integer) lista.get( i )).intValue();
+                int eD = (Integer) lista.get(i);
                 if (eD==esbirros.get( j ).edad){
                     Esbirro x = esbirros.get( i );
                     esbirros.set( i, esbirros.get( j ));
@@ -272,7 +275,7 @@ public class Main extends ApplicationAdapter {
 			//Spawn de los esbirros
 			esbirroSpawnTimer += 1 * deltaTime;
 			if (esbirroSpawnTimer > timeFrame) {
-				esbirros.add(new Esbirro( texturaEsbirro,1100,640 ));
+				esbirros.add(new Esbirro(texturaEsbirro,1100,640 ));
 				esbirros.add(new Esbirro(texturaEsbirro2, 1100, 580));
 				esbirros.add(new Esbirro(texturaEsbirro3, 1100, 520));
 				esbirros.add(new Esbirro(texturaEsbirro, 1100, 460));
@@ -349,6 +352,9 @@ public class Main extends ApplicationAdapter {
 			clouds3DUP.mover(-1.2f);
 			clouds4.mover(-1.3f);
 			clouds4DUP.mover(-1.3f);
+
+
+
 
 			//Colisiones
 			for (Bala bala : balas) {
@@ -491,4 +497,5 @@ public class Main extends ApplicationAdapter {
 		shape.dispose();
 		font.dispose();
 	}
+
 }

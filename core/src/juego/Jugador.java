@@ -29,8 +29,6 @@ public class Jugador extends Objeto {
     public Rectangle recta = new Rectangle(x,y,ancho,alto);
 
 
-
-
     //Se llama desde el metodo render
     public void dibujar(SpriteBatch batch) {
         recta.setSize(70,70);
