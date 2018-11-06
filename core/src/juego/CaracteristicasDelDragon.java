@@ -30,7 +30,7 @@ public class CaracteristicasDelDragon {
         Dragon.addPrimera( nombreD );
     }
 
-    public int getEdadD() { return edadD; }
+    public  int getEdadD() { return edadD; }
     public String getNombreD() { return nombreD; }
     public String getClaseD() {return claseD;}
     public int getResistenciaD() { return resistenciaD; }

@@ -172,11 +172,6 @@ public class MainTest extends ApplicationAdapter {
         }
     }
 
-
-
-
-
-
     //Limpieza de variables
     @After
     public void tearDown() throws Exception {
